@@ -1,0 +1,48 @@
+[
+    {
+        "nome": "bulbasaur",
+        "descricao": "Por algum tempo após seu nascimento, ele usa os nutrientes da semente em sua costa para crescer",
+        "numero": 1,
+        "altura": 0.7,
+        "peso": 6.9,
+        "tipo_primario": {
+            "nome": "Grama",
+            "cor": "Verde",
+            "fraquezas": [
+                "Fogo",
+                "Gelo",
+                "Venenoso",
+                "Voador",
+                "Inseto"
+            ],
+            "resistencia": [
+                "Água",
+                "Terra",
+                "Pedra",
+                "Elétrico"
+            ]
+        },
+        "classe": "PokemonGrama"
+    },
+    {
+        "nome": "charmander",
+        "descricao": "A chama em seu rabo mostra sua vitalidade. Se charmander estiver fraco, sua chama também ficara",
+        "numero": 4,
+        "altura": 0.6,
+        "peso": 8.5,
+        "tipo_primario": {
+            "nome": "Fogo",
+            "cor": "Vermelho",
+            "fraquezas": [
+                "Água",
+                "Terra"
+            ],
+            "resistencia": [
+                "Grama",
+                "Gelo",
+                "Aço"
+            ]
+        },
+        "classe": "PokemonFogo"
+    }
+]

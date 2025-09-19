@@ -1,0 +1,16 @@
+{
+    "name": "pokemon/pokedex",
+    "description": "Sistema de Pokédex em PHP usando orientação a objetos",
+    "type": "project",
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pokemon\\": "src/"
+        }
+    },
+    "scripts": {
+        "start": "php index.php"
+    }
+}
