@@ -1,84 +1,52 @@
 <?php
 
-namespace Pokemon\Tipos;
+namespace Src\Tipos;
 
-use Pokemon\Pokemon;
-use Pokemon\Tipo;
+use Src\Pokemon;
+use Src\Tipo;
 
-/**
- * Classe que representa um Pokémon do tipo Gelo
- * Aplica o princípio de herança, herdando características da classe Pokemon
- * Suporta tipos duplos (Gelo + outro tipo)
- */
-class PokemonGelo extends Pokemon
-{
-    /**
-     * Construtor da classe PokemonGelo
-     * Chama o construtor da classe pai com tipo Gelo
-     * @param string $nome Nome do Pokémon
-     * @param string $descricao Descrição do Pokémon
-     * @param int $numero Número na Pokédex
-     * @param float $altura Altura em metros
-     * @param float $peso Peso em quilogramas
-     * @param Tipo|null $tipoSecundario Tipo secundário (opcional)
-     */
+
+class PokemonGelo extends Pokemon{
+    
     public function __construct(
-        string $nome,
-        string $descricao,
-        int $numero,
-        float $altura,
-        float $peso,
-        ?Tipo $tipoSecundario = null
+        string $name,
+        string $description,
+        int $number,
+        float $height,
+        float $weight,
+        ?Tipo $secondaryType = null
     ) {
-        // Cria um objeto Tipo para gelo com suas características
-        $tipoGelo = new Tipo(
-            "Gelo",
-            "Azul Claro",
-            ["Fogo", "Lutador", "Pedra", "Aço"], // Fraco contra fogo, lutador, pedra e aço
-            ["Grama", "Terra", "Voador", "Dragão"] // Resistente contra grama, terra, voador e dragão
+        $iceType = new Tipo(
+            "Gelo",                                 // Tipo
+            ["Fogo", "Lutador", "Pedra", "Aço"],    // Fraquezas 
+            ["Planta", "Terra", "Voador", "Dragão"] // Resistencias
         );
-
-        // Chama o construtor da classe pai (Pokemon)
-        parent::__construct($nome, $tipoGelo, $descricao, $numero, $altura, $peso, $tipoSecundario);
+        parent::__construct($name, $iceType, $secondaryType, $description, $number, $height, $weight);
     }
 
-
-    /**
-     * Método para serializar o Pokémon para array (para persistência)
-     * @return array Array com dados do Pokémon
-     */
-    public function toArray(): array
-    {
-        $dados = parent::toArray(); // Obtém dados da classe pai
-        $dados['classe'] = 'PokemonGelo';
-        return $dados;
+    public function pokemonToArray(): array{
+        $data = parent::pokemonToArray();
+        $data['classe'] = 'PokemonGelo';
+        return $data;
     }
 
-    /**
-     * Método estático para criar Pokémon a partir de array (para carregamento)
-     * @param array $dados Dados do Pokémon
-     * @return PokemonGelo Instância do Pokémon
-     */
-    public static function fromArray(array $dados): PokemonGelo
-    {
-        // Cria tipo secundário se existir
-        $tipoSecundario = null;
-        if (isset($dados['tipo_secundario'])) {
-            $tipoSecundario = new Tipo(
-                $dados['tipo_secundario']['nome'],
-                $dados['tipo_secundario']['cor'],
-                $dados['tipo_secundario']['fraquezas'] ?? [],
-                $dados['tipo_secundario']['resistencia'] ?? []
+    public static function fromArray(array $data): PokemonGelo{
+        $secondaryType = null;
+        if (isset($data['tipo_secundario'])) {
+            $secondaryType = new Tipo(
+                $data['tipo_secundario']['nome'],
+                $data['tipo_secundario']['fraquezas'] ?? [],
+                $data['tipo_secundario']['resistencia'] ?? []
             );
         }
 
         $pokemon = new PokemonGelo(
-            $dados['nome'],
-            $dados['descricao'],
-            $dados['numero'],
-            $dados['altura'],
-            $dados['peso'],
-            $tipoSecundario
+            $data['nome'],
+            $data['descrição'],
+            $data['numero'],
+            $data['altura'],
+            $data['peso'],
+            $secondaryType
         );
         return $pokemon;
     }

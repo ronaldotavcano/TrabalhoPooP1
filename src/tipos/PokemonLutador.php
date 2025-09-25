@@ -5,7 +5,7 @@ namespace Src\Tipos;
 use Src\Pokemon;
 use Src\Tipo;
 
-class PokemonEletrico extends Pokemon{
+class PokemonLutador extends Pokemon{
 
     public function __construct(
         string $name,
@@ -14,24 +14,24 @@ class PokemonEletrico extends Pokemon{
         float $height,
         float $weight,
         ?Tipo $secondaryType = null
-    ){
-        
-        $electricType = new Tipo(
-            "Elétrico",               // Tipo
-            ["Terra"],                // Fraquezas
-            ["Voador", "Água"]        // Resistencias
+    ){  
+        $fightingType = new Tipo(
+            "Lutador",                  // Tipo
+            ["Voador", "Psíquico"],     // Fraquezas
+            ["Inseto", "Pedra"]         // Resistencias
         );
 
-        parent::__construct($name, $electricType,$secondaryType, $description, $number, $height, $weight);
+        // Chama o construtor da classe pai (Pokemon)
+        parent::__construct($secondaryType, $description, $number, $height, $weight);
     }
 
     public function pokemonToArray(): array{
-        $data = parent::pokemonToArray(); 
-        $data['classe'] = 'PokemonEletrico';
+        $data = parent::pokemonToArray(); // Obtém data da classe pai
+        $data['classe'] = 'PokemonLutador';
         return $data;
     }
 
-    public static function fromArray(array $data): PokemonEletrico{
+    public static function fromArray(array $data): PokemonLutador{
         $secondaryType = null;
         if (isset($data['tipo_secundario'])) {
             $secondaryType = new Tipo(
@@ -40,8 +40,8 @@ class PokemonEletrico extends Pokemon{
                 $data['tipo_secundario']['resistencia'] ?? []
             );
         }
-
-        $pokemon = new PokemonEletrico(
+        
+        $pokemon = new PokemonLutador(
             $data['nome'],
             $data['descrição'],
             $data['numero'],

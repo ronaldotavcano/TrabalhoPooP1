@@ -3,7 +3,7 @@
         'name' => 'pokemon/pokedex',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '7434f5d994230f7a70fac3fa052ccd2b240b039d',
+        'reference' => 'b617d5ab6d710164193313f91f8685397db254d1',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'pokemon/pokedex' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '7434f5d994230f7a70fac3fa052ccd2b240b039d',
+            'reference' => 'b617d5ab6d710164193313f91f8685397db254d1',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -1,13 +1,12 @@
 [
     {
         "nome": "bulbasaur",
-        "descricao": "Por algum tempo após seu nascimento, ele usa os nutrientes da semente em sua costa para crescer",
+        "descrição": "Por algum tempo após seu nascimento, ele usa os nutrientes da semente em sua costa para crescer",
         "numero": 1,
         "altura": 0.7,
         "peso": 6.9,
         "tipo_primario": {
-            "nome": "Grama",
-            "cor": "Verde",
+            "nome": "Planta",
             "fraquezas": [
                 "Fogo",
                 "Gelo",
@@ -22,25 +21,164 @@
                 "Elétrico"
             ]
         },
-        "classe": "PokemonGrama"
+        "tipo_secundario": {
+            "nome": "Venenoso",
+            "fraquezas": [
+                "Terrestre",
+                "Psíquico"       
+            ],
+            "resistencia": [
+                "Grama",
+                "Lutador",
+                "Venenoso",
+                "Inseto"
+            ]
+        },
+        "classe": "PokemonPlanta"
+    },
+    {
+        "nome": "ivysaur",
+        "descrição": "Quanto mais luz solar Ivysaur absorve, mais força se acumula dentro dele, permitindo que o botão em suas costas cresça maior.",
+        "numero": 2,
+        "altura": 1,
+        "peso": 13,
+        "tipo_primario": {
+            "nome": "Planta",
+            "fraquezas": [
+                "Fogo",
+                "Gelo",
+                "Venenoso",
+                "Voador",
+                "Inseto"
+            ],
+            "resistencia": [
+                "Água",
+                "Terra",
+                "Pedra",
+                "Elétrico"
+            ]
+        },
+        "tipo_secundario": {
+            "nome": "Venenoso",
+            "fraquezas": [
+                "Terrestre",
+                "Psíquico"       
+            ],
+            "resistencia": [
+                "Grama",
+                "Lutador",
+                "Venenoso",
+                "Inseto"
+            ]
+        },
+        "classe": "PokemonPlanta"
+    },
+    {
+        "nome": "venusaur",
+        "descrição": "Enquanto se banha ao sol, pode converter a luz em energia. Como resultado, é mais poderoso no verão.",
+        "numero": 3,
+        "altura": 2,
+        "peso": 100,
+        "tipo_primario": {
+            "nome": "Planta",
+            "fraquezas": [
+                "Fogo",
+                "Gelo",
+                "Venenoso",
+                "Voador",
+                "Inseto"
+            ],
+            "resistencia": [
+                "Água",
+                "Terra",
+                "Pedra",
+                "Elétrico"
+            ]
+        },
+        "tipo_secundario": {
+            "nome": "Venenoso",
+            "fraquezas": [
+                "Terrestre",
+                "Psíquico"       
+            ],
+            "resistencia": [
+                "Grama",
+                "Lutador",
+                "Venenoso",
+                "Inseto"
+            ]
+        },
+        "classe": "PokemonPlanta"
     },
     {
         "nome": "charmander",
-        "descricao": "A chama em seu rabo mostra sua vitalidade. Se charmander estiver fraco, sua chama também ficara",
+        "descrição": "A chama em seu rabo mostra sua vitalidade. Se charmander estiver fraco, sua chama também ficará",
         "numero": 4,
         "altura": 0.6,
         "peso": 8.5,
         "tipo_primario": {
             "nome": "Fogo",
-            "cor": "Vermelho",
             "fraquezas": [
                 "Água",
                 "Terra"
             ],
             "resistencia": [
-                "Grama",
+                "Planta",
                 "Gelo",
                 "Aço"
+            ]
+        },
+        "classe": "PokemonFogo"
+    },
+    {
+        "nome": "charmeleon",
+        "descrição": "Quando balança sua cauda ardente, a temperatura ao seu redor sobe cada vez mais, atormentando seus oponentes.",
+        "numero": 5,
+        "altura": 1.1,
+        "peso": 19,
+        "tipo_primario": {
+            "nome": "Fogo",
+            "fraquezas": [
+                "Água",
+                "Terra"
+            ],
+            "resistencia": [
+                "Planta",
+                "Gelo",
+                "Aço"
+            ]
+        },
+        "classe": "PokemonFogo"
+    },
+    {
+        "nome": "Charizard",
+        "descrição": "Se Charizard ficar realmente irritado, a chama na ponta de sua cauda queima em um tom azul claro.",
+        "numero": 6,
+        "altura": 1.7,
+        "peso": 90.5,
+        "tipo_primario": {
+            "nome": "Fogo",
+            "fraquezas": [
+                "Água",
+                "Terra"
+            ],
+            "resistencia": [
+                "Planta",
+                "Gelo",
+                "Aço"
+            ]
+        },
+        "tipo_secundario": {
+            "nome": "Voador",
+            "fraquezas": [
+                "Elétrico",
+                "Gelo",
+                "Pedra"
+            ],
+            "resistencia": [
+                "Grama",
+                "Lutador",
+                "Inseto"
             ]
         },
         "classe": "PokemonFogo"

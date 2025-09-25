@@ -5,7 +5,7 @@ namespace Src\Tipos;
 use Src\Pokemon;
 use Src\Tipo;
 
-class PokemonEletrico extends Pokemon{
+class PokemonDragao extends Pokemon{
 
     public function __construct(
         string $name,
@@ -14,25 +14,28 @@ class PokemonEletrico extends Pokemon{
         float $height,
         float $weight,
         ?Tipo $secondaryType = null
-    ){
-        
-        $electricType = new Tipo(
-            "Elétrico",               // Tipo
-            ["Terra"],                // Fraquezas
-            ["Voador", "Água"]        // Resistencias
+    ){  
+        $dragonType = new Tipo(
+            "Dragão",                              // Tipo
+            ["Gelo", "Dragão"],                    // Fraquezas
+            ["Fogo", "Água", "Elétrico", "Grama"]  // Resistencias
         );
 
-        parent::__construct($name, $electricType,$secondaryType, $description, $number, $height, $weight);
+        // Chama o construtor da classe pai (Pokemon)
+        parent::__construct($secondaryType, $description, $number, $height, $weight);
     }
 
     public function pokemonToArray(): array{
-        $data = parent::pokemonToArray(); 
-        $data['classe'] = 'PokemonEletrico';
+        $data = parent::pokemonToArray(); // Obtém data da classe pai
+        $data['classe'] = 'PokemonDragao';
         return $data;
     }
 
-    public static function fromArray(array $data): PokemonEletrico{
+    // Pq do static, sem o static precisaria ter criado o objeto para chamar o método
+    // fromArrray pega os dados do array e transforma em um objeto
+    public static function fromArray(array $data): PokemonDragao{
         $secondaryType = null;
+            // isset verifica se a variavel existe e se não é nula
         if (isset($data['tipo_secundario'])) {
             $secondaryType = new Tipo(
                 $data['tipo_secundario']['nome'],
@@ -40,8 +43,8 @@ class PokemonEletrico extends Pokemon{
                 $data['tipo_secundario']['resistencia'] ?? []
             );
         }
-
-        $pokemon = new PokemonEletrico(
+        
+        $pokemon = new PokemonDragao(
             $data['nome'],
             $data['descrição'],
             $data['numero'],

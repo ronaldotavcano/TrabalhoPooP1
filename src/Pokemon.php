@@ -1,204 +1,124 @@
 <?php
 
-namespace Pokemon;
+namespace Src;
 
-/**
- * Classe abstrata que representa um Pokémon
- * Aplica o princípio de abstração definindo características comuns de todos os Pokémon
- * Esta classe não pode ser instanciada diretamente, apenas suas subclasses
- */
-abstract class Pokemon
-{
-    // Propriedades protegidas (acessíveis pelas subclasses)
-    protected string $nome; // Nome do Pokémon
-    protected Tipo $tipoPrimario; // Tipo primário do Pokémon
-    protected ?Tipo $tipoSecundario; // Tipo secundário do Pokémon (pode ser null)
-    protected string $descricao; // Descrição breve do Pokémon
-    protected int $numero; // Número na Pokédex
-    protected float $altura; // Altura em metros
-    protected float $peso; // Peso em quilogramas
+abstract class Pokemon{
+    // Pq protected, pq as classes que herdam teram acesso
+    protected string $name;  
+    protected Tipo $primaryType;    
+    protected ?Tipo $secondaryType; // ?Tipo-> significa que pode receber o valor nulo.
+    protected string $description; 
+    protected int $number; 
+    protected float $height; 
+    protected float $weight; 
 
-    /**
-     * Construtor da classe Pokemon
-     * @param string $nome Nome do Pokémon
-     * @param Tipo $tipoPrimario Tipo primário do Pokémon
-     * @param string $descricao Descrição do Pokémon
-     * @param int $numero Número na Pokédex
-     * @param float $altura Altura em metros
-     * @param float $peso Peso em quilogramas
-     * @param Tipo|null $tipoSecundario Tipo secundário do Pokémon (opcional)
-     */
     public function __construct(
-        string $nome,
-        Tipo $tipoPrimario,
-        string $descricao,
-        int $numero,
-        float $altura,
-        float $peso,
-        ?Tipo $tipoSecundario = null
-    ) {
-        $this->nome = $nome;
-        $this->tipoPrimario = $tipoPrimario;
-        $this->tipoSecundario = $tipoSecundario;
-        $this->descricao = $descricao;
-        $this->numero = $numero;
-        $this->altura = $altura;
-        $this->peso = $peso;
+        string $name,
+        Tipo $primaryType,
+        ?Tipo $secondaryType = null,
+        string $description,
+        int $number,
+        float $height,
+        float $weight,){
+        $this->name = $name;
+        $this->primaryType = $primaryType;
+        $this->secondaryType = $secondaryType;
+        $this->description = $description;
+        $this->number = $number;
+        $this->height = $height;
+        $this->weight = $weight;
     }
 
-    /**
-     * Método getter para obter o nome do Pokémon
-     * @return string Nome do Pokémon
-     */
-    public function getNome(): string
-    {
-        return $this->nome;
+    public function getName(): string{
+        return $this->name;
     }
 
-    /**
-     * Método getter para obter o tipo primário do Pokémon
-     * @return Tipo Objeto Tipo primário do Pokémon
-     */
-    public function getTipoPrimario(): Tipo
-    {
-        return $this->tipoPrimario;
+    public function getPrimaryType(): Tipo{
+        return $this->primaryType;
     }
 
-    /**
-     * Método getter para obter o tipo secundário do Pokémon
-     * @return Tipo|null Objeto Tipo secundário do Pokémon ou null
-     */
-    public function getTipoSecundario(): ?Tipo
-    {
-        return $this->tipoSecundario;
+    public function getSecondaryType(): ?Tipo{
+        return $this->secondaryType;
     }
 
-    /**
-     * Método para obter todos os tipos do Pokémon
-     * @return array Array com os tipos do Pokémon
-     */
-    public function getTipos(): array
-    {
-        $tipos = [$this->tipoPrimario];
-        if ($this->tipoSecundario !== null) {
-            $tipos[] = $this->tipoSecundario;
+    public function getTypes(): array{
+        // váriavel types é um array que recebe primeiro o tipo primário
+        $types = [$this->primaryType];
+        if ($this->secondaryType !== null) {
+            $types[] = $this->secondaryType;
         }
-        return $tipos;
+        return $types;
     }
 
-    /**
-     * Método para verificar se o Pokémon tem tipo secundário
-     * @return bool True se tem tipo secundário, false caso contrário
-     */
-    public function temTipoSecundario(): bool
-    {
-        return $this->tipoSecundario !== null;
+    public function hasSecondaryType(): bool{
+        return $this->secondaryType !== null;
     }
 
-    /**
-     * Método getter para obter a descrição do Pokémon
-     * @return string Descrição do Pokémon
-     */
-    public function getDescricao(): string
-    {
-        return $this->descricao;
+    public function getDescription(): string{
+        return $this->description;
     }
 
-    /**
-     * Método getter para obter o número do Pokémon
-     * @return int Número na Pokédex
-     */
-    public function getNumero(): int
-    {
-        return $this->numero;
+    public function getNumber(): int{
+        return $this->number;
     }
 
-    /**
-     * Método getter para obter a altura do Pokémon
-     * @return float Altura em metros
-     */
-    public function getAltura(): float
-    {
-        return $this->altura;
+    public function getHeight(): float{
+        return $this->height;
     }
 
-    /**
-     * Método getter para obter o peso do Pokémon
-     * @return float Peso em quilogramas
-     */
-    public function getPeso(): float
-    {
-        return $this->peso;
+    public function getWeight(): float{
+        return $this->weight;
     }
 
-
-    /**
-     * Método para exibir informações completas do Pokémon
-     * @return string String formatada com todas as informações
-     */
-    public function exibirInformacoes(): string
-    {
+    public function showInfos(): string{
+        //operador .= serve para concatenar strings 
         $info = "=== POKÉMON ===\n";
-        $info .= "Nome: {$this->nome}\n";
-        $info .= "Número: #{$this->numero}\n";
+        $info .= "Nome: {$this->name}\n";
+        $info .= "Número: {$this->number}\n";
         
-        // Exibe tipos (primário e secundário se existir)
-        $tipos = $this->tipoPrimario->getNome();
-        if ($this->tipoSecundario !== null) {
-            $tipos .= " / " . $this->tipoSecundario->getNome();
+        $types = $this->primaryType->getName();
+        if ($this->secondaryType !== null){
+            $types .= " / " . $this->secondaryType->getName();
         }
-        $info .= "Tipo(s): {$tipos}\n";
+        $info .= "Tipo(s): {$types}\n";
         
-        $info .= "Descrição: {$this->descricao}\n";
-        $info .= "Altura: {$this->altura}m\n";
-        $info .= "Peso: {$this->peso}kg\n";
+        $info .= "Descrição: {$this->description}\n";
+        $info .= "Altura: {$this->height}m\n";
+        $info .= "Peso: {$this->weight}kg\n";
         
         return $info;
     }
 
-    /**
-     * Método para exibir informações resumidas do Pokémon
-     * @return string String formatada com informações básicas
-     */
-    public function exibirResumo(): string
-    {
-        $tipos = $this->tipoPrimario->getNome();
-        if ($this->tipoSecundario !== null) {
-            $tipos .= "/" . $this->tipoSecundario->getNome();
+    public function showSummary(): string{
+        $tipos = $this->primaryType->getName();
+        if ($this->secondaryType !== null) {
+            $tipos .= "/" . $this->secondaryType->getName();
         }
-        return "#{$this->numero} - {$this->nome} ({$tipos})";
+        return "{$this->number} - {$this->name} ({$tipos})"; //ex: 006 - Charizard - (Fogo/Voador)
     }
 
-    /**
-     * Método para serializar o Pokémon para array (para persistência)
-     * @return array Array com dados do Pokémon
-     */
-    public function toArray(): array
-    {
-        $dados = [
-            'nome' => $this->nome,
-            'descricao' => $this->descricao,
-            'numero' => $this->numero,
-            'altura' => $this->altura,
-            'peso' => $this->peso,
+    public function pokemonToArray(): array{
+        $data = [
+            // Array associativo para salvar no pokemons.json, equivalente ao 'chave': valor,
+            'nome' => $this->name,
+            'descrição' => $this->description,
+            'numero' => $this->number,
+            'altura' => $this->height,
+            'peso' => $this->weight,
             'tipo_primario' => [
-                'nome' => $this->tipoPrimario->getNome(),
-                'cor' => $this->tipoPrimario->getCor(),
-                'fraquezas' => $this->tipoPrimario->getFraquezas(),
-                'resistencia' => $this->tipoPrimario->getResistencia()
+                'nome' => $this->primaryType->getName(),
+                'fraquezas' => $this->primaryType->getWeakness(),
+                'resistencia' => $this->primaryType->getResistance()
             ]
         ];
-
         // Adiciona tipo secundário se existir
-        if ($this->tipoSecundario !== null) {
-            $dados['tipo_secundario'] = [
-                'nome' => $this->tipoSecundario->getNome(),
-                'cor' => $this->tipoSecundario->getCor(),
-                'fraquezas' => $this->tipoSecundario->getFraquezas(),
-                'resistencia' => $this->tipoSecundario->getResistencia()
+        if ($this->secondaryType !== null) {
+            $data['tipo_secundario'] = [
+                'nome' => $this->secondaryType->getName(),
+                'fraquezas' => $this->secondaryType->getWeakness(),
+                'resistencia' => $this->secondaryType->getResistance()
             ];
         }
-
-        return $dados;
+        return $data;
     }
 }
