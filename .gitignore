@@ -1,2 +1,4 @@
-composer.lock
+# ignorando vendor
 /vendor/
+# ignorando composer.lock
+composer.lock
