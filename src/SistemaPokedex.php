@@ -18,7 +18,6 @@ use Src\Tipos\PokemonTerrestre;
 use Src\Tipos\PokemonVenenoso;
 use Src\Tipos\PokemonVoador;
 
-
 class SistemaPokedex{
     
     private Pokedex $pokedex; 
@@ -26,7 +25,7 @@ class SistemaPokedex{
 
     public function __construct(){
         $this->pokedex = new Pokedex(); 
-        $this->systemOn = true; // Define sistema estando ativo
+        $this->systemOn = true;
     }
 
     public function start(): void{
@@ -116,7 +115,6 @@ class SistemaPokedex{
         
         $optionType = (int) readline("Escolha o tipo (1 a 15): ");
         
-        
         $pokemon = $this->createPokemonByType($optionType, $name, $description, $number, $height, $weight);
         
         if ($pokemon === null) {
@@ -133,46 +131,55 @@ class SistemaPokedex{
 
     private function createPokemonByType(int $optionType, string $name, string $description, int $number, float $height, float $weight): ?Pokemon{
         
+        if ($optionType < 1 || $optionType > 15) {
+            return null;
+        }
+        
         $hasSecondaryType = readline("Deseja adicionar um tipo secundário? (s/n): ");
         $secondaryType = null;
         
-        if (strtolower($hasSecondaryType) === 's') {
+        if (strtolower(trim($hasSecondaryType)) === 's') {
             $secondaryType = $this->chooseSecondaryType();
         }
 
-        switch ($optionType){
-            case 1: 
-                return new PokemonFogo($name, $description, $number, $height, $weight, $secondaryType);
-            case 2: 
-                return new PokemonAgua($name, $description, $number, $height, $weight, $secondaryType);
-            case 3: 
-                return new PokemonPlanta($name, $description, $number, $height, $weight, $secondaryType);
-            case 4: 
-                return new PokemonEletrico($name, $description, $number, $height, $weight, $secondaryType);
-            case 5: 
-                return new PokemonGelo($name, $description, $number, $height, $weight, $secondaryType);
-            case 6: 
-                return new PokemonDragao($name, $description, $number, $height, $weight, $secondaryType);
-            case 7: 
-                return new PokemonFantasma($name, $description, $number, $height, $weight, $secondaryType);
-            case 8: 
-                return new PokemonInseto($name, $description, $number, $height, $weight, $secondaryType);
-            case 9: 
-                return new PokemonLutador($name, $description, $number, $height, $weight, $secondaryType);
-            case 10: 
-                return new PokemonNormal($name, $description, $number, $height, $weight, $secondaryType);
-            case 11: 
-                return new PokemonPedra($name, $description, $number, $height, $weight, $secondaryType);
-            case 12: 
-                return new PokemonPsiquico($name, $description, $number, $height, $weight, $secondaryType);
-            case 13: 
-                return new PokemonTerrestre($name, $description, $number, $height, $weight, $secondaryType);
-            case 14: 
-                return new PokemonVenenoso($name, $description, $number, $height, $weight, $secondaryType);
-            case 15: 
-                return new PokemonVoador($name, $description, $number, $height, $weight, $secondaryType);
-            default:
-                return null; 
+        try {
+            switch ($optionType){
+                case 1: 
+                    return new PokemonFogo($name, $description, $number, $height, $weight, $secondaryType);
+                case 2: 
+                    return new PokemonAgua($name, $description, $number, $height, $weight, $secondaryType);
+                case 3: 
+                    return new PokemonPlanta($name, $description, $number, $height, $weight, $secondaryType);
+                case 4: 
+                    return new PokemonEletrico($name, $description, $number, $height, $weight, $secondaryType);
+                case 5: 
+                    return new PokemonGelo($name, $description, $number, $height, $weight, $secondaryType);
+                case 6: 
+                    return new PokemonDragao($name, $description, $number, $height, $weight, $secondaryType);
+                case 7: 
+                    return new PokemonFantasma($name, $description, $number, $height, $weight, $secondaryType);
+                case 8: 
+                    return new PokemonInseto($name, $description, $number, $height, $weight, $secondaryType);
+                case 9: 
+                    return new PokemonLutador($name, $description, $number, $height, $weight, $secondaryType);
+                case 10: 
+                    return new PokemonNormal($name, $description, $number, $height, $weight, $secondaryType);
+                case 11: 
+                    return new PokemonPedra($name, $description, $number, $height, $weight, $secondaryType);
+                case 12: 
+                    return new PokemonPsiquico($name, $description, $number, $height, $weight, $secondaryType);
+                case 13: 
+                    return new PokemonTerrestre($name, $description, $number, $height, $weight, $secondaryType);
+                case 14: 
+                    return new PokemonVenenoso($name, $description, $number, $height, $weight, $secondaryType);
+                case 15: 
+                    return new PokemonVoador($name, $description, $number, $height, $weight, $secondaryType);
+                default:
+                    return null; 
+            }
+        } catch (Exception $e) {
+            echo "Erro ao criar Pokémon: " . $e->getMessage() . "\n";
+            return null;
         }
     }
 
@@ -197,7 +204,7 @@ class SistemaPokedex{
         $optionType = (int) readline("Escolha o tipo secundário (1 a 15): ");
         
         switch ($optionType) {
-            case 1: //        Tipagem       Fraquezas              Resistências
+            case 1:
                 return new Tipo("Fogo", ["Água", "Terra"], ["Planta", "Gelo", "Aço"]);
             case 2: 
                 return new Tipo("Água", ["Planta", "Elétrico"], ["Fogo", "Terra", "Pedra"]);
@@ -208,27 +215,27 @@ class SistemaPokedex{
             case 5: 
                 return new Tipo("Gelo", ["Fogo", "Lutador", "Pedra", "Aço"], ["Planta", "Terra", "Voador", "Dragão"]);
             case 6: 
-                return new Tipo("Dragão", ["Gelo", "Dragão"], ["Fogo", "Água", "Elétrico", "Grama"] );
+                return new Tipo("Dragão", ["Gelo", "Dragão"], ["Fogo", "Água", "Elétrico", "Grama"]);
             case 7: 
                 return new Tipo("Fantasma", ["Fantasma"], ["Venenoso", "Inseto"]);
             case 8: 
-                return new Tipo("Inseto", ["Fogo", "Voador", "Pedra"], ["Planta", "Lutador", "Terrestre"] );
+                return new Tipo("Inseto", ["Fogo", "Voador", "Pedra"], ["Planta", "Lutador", "Terrestre"]);
             case 9: 
-                return new Tipo("Lutador", ["Voador", "Psíquico"], ["Inseto", "Pedra"] );
+                return new Tipo("Lutador", ["Voador", "Psíquico"], ["Inseto", "Pedra"]);
             case 10: 
-                return new Tipo("Normal", ["Lutador"], [" "]);
+                return new Tipo("Normal", ["Lutador"], [""]);
             case 11: 
-                return new Tipo("Pedra", ["Água", "Planta", "Lutador", "Terrestre"], ["Fogo", "Normal", "voador", "Venenoso"]);
+                return new Tipo("Pedra", ["Água", "Planta", "Lutador", "Terrestre"], ["Fogo", "Normal", "Voador", "Venenoso"]);
             case 12: 
                 return new Tipo("Psíquico", ["Inseto", "Fantasma"], ["Lutador", "Psíquico"]);
             case 13: 
-                return new Tipo("Terrestre", ["Água", "Grama", " Gelo"], ["Venenoso", "Pedra"]);
+                return new Tipo("Terrestre", ["Água", "Grama", "Gelo"], ["Venenoso", "Pedra"]);
             case 14: 
-                return new Tipo("Venenoso", ["Terrestre", "Psíquico", ], ["Grama", "Lutador", "Venenoso", "Inseto"]);
+                return new Tipo("Venenoso", ["Terrestre", "Psíquico"], ["Grama", "Lutador", "Venenoso", "Inseto"]);
             case 15: 
-                return new Tipo("Voador",["Elétrico", "Gelo", "Pedra"], ["Grama", "Lutador", "Inseto"]);
+                return new Tipo("Voador", ["Elétrico", "Gelo", "Pedra"], ["Grama", "Lutador", "Inseto"]);
             default:
-                return null; // se nenhum retorna nulo, ou seja apenas 1 tipagem
+                return null;
         }
     }
 
@@ -277,12 +284,11 @@ class SistemaPokedex{
     }
 
     private function showStatistics(): void{                               
-                                // exibir relatório
         echo "\n" . $this->pokedex->showRecord() . "\n";
     }
 
     private function exit(): void{
-        $this->systemOn = false; // Define sistema como inativo
+        $this->systemOn = false;
     }
 
     private function showExitMessage(): void{      

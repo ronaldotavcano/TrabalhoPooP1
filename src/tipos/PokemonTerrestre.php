@@ -7,7 +7,7 @@ use Src\Tipo;
 
 class PokemonTerrestre extends Pokemon{
 
-    public function construct(
+    public function __construct(
         string $name,
         string $description,
         int $number,
@@ -22,7 +22,7 @@ class PokemonTerrestre extends Pokemon{
         );
 
         // Chama o construtor da classe pai (Pokemon)
-        parent::construct($secondaryType, $description, $number, $height, $weight);
+        parent::__construct($name, $groundType,$secondaryType, $description, $number, $height, $weight);
     }
 
     public function pokemonToArray(): array{

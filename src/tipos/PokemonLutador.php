@@ -22,7 +22,7 @@ class PokemonLutador extends Pokemon{
         );
 
         // Chama o construtor da classe pai (Pokemon)
-        parent::__construct($secondaryType, $description, $number, $height, $weight);
+        parent::__construct($name, $fightingType,$secondaryType, $description, $number, $height, $weight);
     }
 
     public function pokemonToArray(): array{

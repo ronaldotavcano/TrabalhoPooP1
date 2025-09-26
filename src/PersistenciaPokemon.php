@@ -2,11 +2,21 @@
 
 namespace Src;
 
-use Src\Tipos\PokemonFogo;
 use Src\Tipos\PokemonAgua;
-use Src\Tipos\PokemonPlanta;
+use Src\Tipos\PokemonDragao;
 use Src\Tipos\PokemonEletrico;
+use Src\Tipos\PokemonFantasma;
+use Src\Tipos\PokemonFogo;
 use Src\Tipos\PokemonGelo;
+use Src\Tipos\PokemonInseto;
+use Src\Tipos\PokemonLutador;
+use Src\Tipos\PokemonNormal;
+use Src\Tipos\PokemonPedra;
+use Src\Tipos\PokemonPlanta;
+use Src\Tipos\PokemonPsiquico;
+use Src\Tipos\PokemonTerrestre;
+use Src\Tipos\PokemonVenenoso;
+use Src\Tipos\PokemonVoador;
 
 class PersistenciaPokemon{
     private string $dataFiles; 
@@ -87,16 +97,36 @@ class PersistenciaPokemon{
             }
 
             switch ($data['classe']) {
-                case 'PokemonFogo':
-                    return PokemonFogo::fromArray($data);
                 case 'PokemonAgua':
                     return PokemonAgua::fromArray($data);
-                case 'PokemonPlanta':
-                    return PokemonPlanta::fromArray($data);
+                case 'PokemonDragao':
+                    return PokemonDragao::fromArray($data);
                 case 'PokemonEletrico':
                     return PokemonEletrico::fromArray($data);
+                case 'PokemonFantasma':
+                    return PokemonFantasma::fromArray($data);
+                case 'PokemonFogo':
+                    return PokemonFogo::fromArray($data);
                 case 'PokemonGelo':
                     return PokemonGelo::fromArray($data);
+                case 'PokemonInseto':
+                    return PokemonInseto::fromArray($data);
+                case 'PokemonLutador':
+                    return PokemonLutador::fromArray($data);
+                case 'PokemonNormal':
+                    return PokemonNormal::fromArray($data);
+                case 'PokemonPedra':
+                    return PokemonPedra::fromArray($data);
+                case 'PokemonPlanta':
+                    return PokemonPlanta::fromArray($data);
+                case 'PokemonPsiquico':
+                    return PokemonPsiquico::fromArray($data);
+                case 'PokemonTerrestre':
+                    return PokemonTerrestre::fromArray($data);
+                case 'PokemonVenenoso':
+                    return PokemonVenenoso::fromArray($data);
+                case 'PokemonVoador':
+                    return PokemonVoador::fromArray($data);
                 default:
                     return null;
             }            

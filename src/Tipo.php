@@ -36,7 +36,6 @@ class Tipo{
 
     public function showInfos(): string{
         $info = "Tipo: {$this->name}\n";
-        $info .= "Cor: {$this->cor}\n";
         
         if (!empty($this->weakeness)) {
                                         // implode -> transforma um array em string, o 1º) Parametro é o separador
