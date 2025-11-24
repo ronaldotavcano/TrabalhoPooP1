@@ -21,7 +21,7 @@ use Src\Tipos\PokemonVoador;
 class SistemaPokedex{
     
     private Pokedex $pokedex;
-    private GerenciadorTreinadores $gerenciadorTreinadores;
+    private GerenciadorTreinadores $trainerManager;
     private bool $systemOn;
     
     // Array centralizado com informações dos tipos e classes correspondentes 
@@ -120,7 +120,7 @@ class SistemaPokedex{
 
     public function __construct(){
         $this->pokedex = new Pokedex();
-        $this->gerenciadorTreinadores = new GerenciadorTreinadores($this->pokedex);
+        $this->trainerManager = new GerenciadorTreinadores($this->pokedex);
         $this->systemOn = true;
     }
 
@@ -332,43 +332,43 @@ class SistemaPokedex{
     private function registerTrainer(): void{
         echo "\n--- CADASTRAR TREINADOR ---\n";
         
-        $nome = readline("Nome do Treinador: ");
-        $idade = (int) readline("Idade do Treinador: ");
+        $name = readline("Nome do Treinador: ");
+        $age = (int) readline("Idade do Treinador: ");
         
-        $treinador = new Treinador($nome, $idade);
+        $trainer = new Treinador($name, $age);
         
         // Permite adicionar Pokémon ao treinador
-        $adicionarPokemon = readline("Deseja adicionar Pokémon ao treinador? (s/n): ");
-        if (strtolower(trim($adicionarPokemon)) === 's') {
-            $this->addPokemonsToTrainer($treinador);
+        $addPokemon = readline("Deseja adicionar Pokémon ao treinador? (s/n): ");
+        if (strtolower(trim($addPokemon)) === 's') {
+            $this->addPokemonsToTrainer($trainer);
         }
         
-        if ($this->gerenciadorTreinadores->adicionarTreinador($treinador)) {
+        if ($this->trainerManager->addTrainer($trainer)) {
             echo "Treinador cadastrado com sucesso!\n";
         } else {
             echo "Erro: Já existe um treinador com este nome\n";
         }
     }
 
-    private function addPokemonsToTrainer(Treinador $treinador): void{
-        $continuar = true;
-        while ($continuar) {
-            $numero = (int) readline("Digite o número do Pokémon para adicionar (0 para parar): ");
+    private function addPokemonsToTrainer(Treinador $trainer): void{
+        $continue = true;
+        while ($continue) {
+            $number = (int) readline("Digite o número do Pokémon para adicionar (0 para parar): ");
             
-            if ($numero === 0) {
-                $continuar = false;
+            if ($number === 0) {
+                $continue = false;
                 continue;
             }
             
-            $pokemon = $this->pokedex->searchByNumber($numero);
+            $pokemon = $this->pokedex->searchByNumber($number);
             if ($pokemon !== null) {
-                $nivel = (int) readline("Digite o nível do Pokémon (padrão: 1): ");
-                if ($nivel < 1) {
-                    $nivel = 1;
+                $level = (int) readline("Digite o nível do Pokémon (padrão: 1): ");
+                if ($level < 1) {
+                    $level = 1;
                 }
                 
-                if ($treinador->adicionarPokemon($pokemon, $nivel)) {
-                    echo "Pokémon adicionado ao treinador (Nível {$nivel})!\n";
+                if ($trainer->addPokemon($pokemon, $level)) {
+                    echo "Pokémon adicionado ao treinador (Nível {$level})!\n";
                 } else {
                     echo "Este Pokémon já está com o treinador!\n";
                 }
@@ -380,24 +380,24 @@ class SistemaPokedex{
 
     private function editTrainer(): void{
         echo "\n--- EDITAR TREINADOR ---\n";
-        $nome = readline("Digite o nome do treinador a editar: ");
+        $name = readline("Digite o nome do treinador a editar: ");
         
-        $treinador = $this->gerenciadorTreinadores->buscarTreinador($nome);
-        if ($treinador === null) {
+        $trainer = $this->trainerManager->findTrainer($name);
+        if ($trainer === null) {
             echo "Treinador não encontrado!\n";
             return;
         }
         
         echo "\nTreinador encontrado:\n";
-        echo $treinador->showInfos() . "\n";
+        echo $trainer->showInfos() . "\n";
         
-        $novoNome = readline("Novo nome (Enter para manter): ");
-        $novaIdade = readline("Nova idade (Enter para manter): ");
+        $newName = readline("Novo nome (Enter para manter): ");
+        $newAge = readline("Nova idade (Enter para manter): ");
         
-        $nomeFinal = trim($novoNome) !== '' ? $novoNome : null;
-        $idadeFinal = trim($novaIdade) !== '' ? (int) $novaIdade : null;
+        $finalName = trim($newName) !== '' ? $newName : null;
+        $finalAge = trim($newAge) !== '' ? (int) $newAge : null;
         
-        if ($this->gerenciadorTreinadores->atualizarTreinador($nome, $nomeFinal, $idadeFinal)) {
+        if ($this->trainerManager->updateTrainer($name, $finalName, $finalAge)) {
             echo "Treinador atualizado com sucesso!\n";
         } else {
             echo "Erro ao atualizar treinador!\n";
@@ -406,9 +406,9 @@ class SistemaPokedex{
 
     private function deleteTrainer(): void{
         echo "\n--- EXCLUIR TREINADOR ---\n";
-        $nome = readline("Digite o nome do treinador a excluir: ");
+        $name = readline("Digite o nome do treinador a excluir: ");
         
-        if ($this->gerenciadorTreinadores->removerTreinador($nome)) {
+        if ($this->trainerManager->removeTrainer($name)) {
             echo "Treinador excluído com sucesso!\n";
         } else {
             echo "Treinador não encontrado!\n";
@@ -418,25 +418,25 @@ class SistemaPokedex{
     private function listTrainers(): void{
         echo "\n--- TODOS OS TREINADORES ---\n";
         
-        if ($this->gerenciadorTreinadores->estaVazia()) {
+        if ($this->trainerManager->isEmpty()) {
             echo "Não há treinadores cadastrados!\n";
             return;
         }
         
-        $treinadores = $this->gerenciadorTreinadores->listarTodos();
-        foreach ($treinadores as $index => $treinador) {
-            echo ($index + 1) . ") " . $treinador->getNome() . " - " . $treinador->getIdade() . " anos - " . $treinador->getTotalPokemons() . " Pokémon(s)\n";
+        $trainers = $this->trainerManager->listAll();
+        foreach ($trainers as $index => $trainer) {
+            echo ($index + 1) . ") " . $trainer->getName() . " - " . $trainer->getAge() . " anos - " . $trainer->getTotalPokemons() . " Pokémon(s)\n";
         }
     }
 
     private function searchTrainer(): void{
         echo "\n--- BUSCAR TREINADOR ---\n";
-        $nome = readline("Digite o nome do treinador: ");
+        $name = readline("Digite o nome do treinador: ");
         
-        $treinador = $this->gerenciadorTreinadores->buscarTreinador($nome);
+        $trainer = $this->trainerManager->findTrainer($name);
         
-        if ($treinador !== null) {
-            echo "\n" . $treinador->showInfos() . "\n";
+        if ($trainer !== null) {
+            echo "\n" . $trainer->showInfos() . "\n";
         } else {
             echo "Treinador não encontrado!\n";
         }

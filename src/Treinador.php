@@ -3,50 +3,50 @@
 namespace Src;
 
 class Treinador{
-    private string $nome;
-    private int $idade;
-    private array $pokemons; // Array de ['pokemon' => Pokemon, 'nivel' => int]
+    private string $name;
+    private int $age;
+    private array $pokemons; // Array de ['pokemon' => Pokemon, 'level' => int]
 
-    public function __construct(string $nome, int $idade, array $pokemons = []){
-        $this->nome = $nome;
-        $this->idade = $idade;
+    public function __construct(string $name, int $age, array $pokemons = []){
+        $this->name = $name;
+        $this->age = $age;
         $this->pokemons = $pokemons;
     }
 
-    public function getNome(): string{
-        return $this->nome;
+    public function getName(): string{
+        return $this->name;
     }
 
-    public function getIdade(): int{
-        return $this->idade;
+    public function getAge(): int{
+        return $this->age;
     }
 
     public function getPokemons(): array{
         return $this->pokemons;
     }
 
-    public function setNome(string $nome): void{
-        $this->nome = $nome;
+    public function setName(string $name): void{
+        $this->name = $name;
     }
 
-    public function setIdade(int $idade): void{
-        $this->idade = $idade;
+    public function setAge(int $age): void{
+        $this->age = $age;
     }
 
-    public function adicionarPokemon(Pokemon $pokemon, int $nivel = 1): bool{
+    public function addPokemon(Pokemon $pokemon, int $level = 1): bool{
         // Verifica se o Pokémon já existe (por número)
         foreach ($this->pokemons as $p) {
             if ($p['pokemon']->getNumber() === $pokemon->getNumber()) {
                 return false; // Pokémon já existe
             }
         }
-        $this->pokemons[] = ['pokemon' => $pokemon, 'nivel' => $nivel];
+        $this->pokemons[] = ['pokemon' => $pokemon, 'level' => $level];
         return true;
     }
 
-    public function removerPokemon(int $numero): bool{
+    public function removePokemon(int $number): bool{
         foreach ($this->pokemons as $key => $p) {
-            if ($p['pokemon']->getNumber() === $numero) {
+            if ($p['pokemon']->getNumber() === $number) {
                 unset($this->pokemons[$key]);
                 $this->pokemons = array_values($this->pokemons); // Reindexa o array
                 return true;
@@ -55,19 +55,19 @@ class Treinador{
         return false;
     }
 
-    public function buscarPokemon(int $numero): ?Pokemon{
+    public function findPokemon(int $number): ?Pokemon{
         foreach ($this->pokemons as $p) {
-            if ($p['pokemon']->getNumber() === $numero) {
+            if ($p['pokemon']->getNumber() === $number) {
                 return $p['pokemon'];
             }
         }
         return null;
     }
 
-    public function getNivelPokemon(int $numero): ?int{
+    public function getPokemonLevel(int $number): ?int{
         foreach ($this->pokemons as $p) {
-            if ($p['pokemon']->getNumber() === $numero) {
-                return $p['nivel'];
+            if ($p['pokemon']->getNumber() === $number) {
+                return $p['level'];
             }
         }
         return null;
@@ -77,18 +77,18 @@ class Treinador{
         return count($this->pokemons);
     }
 
-    public function treinadorToArray(): array{
+    public function trainerToArray(): array{
         $pokemonsData = [];
         foreach ($this->pokemons as $p) {
             $pokemonsData[] = [
                 'nome' => $p['pokemon']->getName(),
-                'nivel' => $p['nivel']
+                'nivel' => $p['level']
             ];
         }
         
         return [
-            'nome' => $this->nome,
-            'idade' => $this->idade,
+            'nome' => $this->name,
+            'idade' => $this->age,
             'pokemons' => $pokemonsData
         ];
     }
@@ -101,19 +101,19 @@ class Treinador{
                 // Se for formato antigo (com todos os dados), busca pelo número
                 if (isset($pokemonData['numero'])) {
                     $pokemon = $pokedex->searchByNumber($pokemonData['numero']);
-                    $nivel = $pokemonData['nivel'] ?? 1;
+                    $level = $pokemonData['nivel'] ?? 1;
                     if ($pokemon !== null) {
-                        $pokemons[] = ['pokemon' => $pokemon, 'nivel' => $nivel];
+                        $pokemons[] = ['pokemon' => $pokemon, 'level' => $level];
                     }
                 }
                 // Se for formato novo (apenas nome e nível)
                 elseif (isset($pokemonData['nome'])) {
-                    $pokemonsEncontrados = $pokedex->searchByName($pokemonData['nome']);
-                    if (!empty($pokemonsEncontrados)) {
+                    $foundPokemons = $pokedex->searchByName($pokemonData['nome']);
+                    if (!empty($foundPokemons)) {
                         // Pega o primeiro Pokémon encontrado com esse nome
-                        $pokemon = $pokemonsEncontrados[0];
-                        $nivel = $pokemonData['nivel'] ?? 1;
-                        $pokemons[] = ['pokemon' => $pokemon, 'nivel' => $nivel];
+                        $pokemon = $foundPokemons[0];
+                        $level = $pokemonData['nivel'] ?? 1;
+                        $pokemons[] = ['pokemon' => $pokemon, 'level' => $level];
                     }
                 }
             }
@@ -124,14 +124,14 @@ class Treinador{
 
     public function showInfos(): string{
         $info = "=== TREINADOR ===\n";
-        $info .= "Nome: {$this->nome}\n";
-        $info .= "Idade: {$this->idade} anos\n";
+        $info .= "Nome: {$this->name}\n";
+        $info .= "Idade: {$this->age} anos\n";
         $info .= "Total de Pokémon: {$this->getTotalPokemons()}\n";
         
         if (!empty($this->pokemons)) {
             $info .= "\nPokémon do Treinador:\n";
             foreach ($this->pokemons as $p) {
-                $info .= "- " . $p['pokemon']->showSummary() . " (Nível {$p['nivel']})\n";
+                $info .= "- " . $p['pokemon']->showSummary() . " (Nível {$p['level']})\n";
             }
         }
         

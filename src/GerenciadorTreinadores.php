@@ -3,88 +3,88 @@
 namespace Src;
 
 class GerenciadorTreinadores{
-    private array $treinadores;
-    private string $arquivo;
+    private array $trainers;
+    private string $file;
     private Pokedex $pokedex;
 
-    public function __construct(Pokedex $pokedex, string $arquivo = 'data/treinadores.json'){
-        $this->treinadores = [];
-        $this->arquivo = $arquivo;
+    public function __construct(Pokedex $pokedex, string $file = 'data/treinadores.json'){
+        $this->trainers = [];
+        $this->file = $file;
         $this->pokedex = $pokedex;
-        $this->carregarTreinadores();
+        $this->loadTrainers();
     }
 
-    public function adicionarTreinador(Treinador $treinador): bool{
+    public function addTrainer(Treinador $trainer): bool{
         // Verifica se já existe treinador com o mesmo nome
-        foreach ($this->treinadores as $t) {
-            if (strtolower($t->getNome()) === strtolower($treinador->getNome())) {
+        foreach ($this->trainers as $t) {
+            if (strtolower($t->getName()) === strtolower($trainer->getName())) {
                 return false;
             }
         }
         
-        $this->treinadores[] = $treinador;
-        $this->salvarTreinadores();
+        $this->trainers[] = $trainer;
+        $this->saveTrainers();
         return true;
     }
 
-    public function buscarTreinador(string $nome): ?Treinador{
-        foreach ($this->treinadores as $treinador) {
-            if (stripos($treinador->getNome(), $nome) !== false) {
-                return $treinador;
+    public function findTrainer(string $name): ?Treinador{
+        foreach ($this->trainers as $trainer) {
+            if (stripos($trainer->getName(), $name) !== false) {
+                return $trainer;
             }
         }
         return null;
     }
 
-    public function buscarTreinadorPorIndice(int $indice): ?Treinador{
-        return $this->treinadores[$indice] ?? null;
+    public function findTrainerById(int $id): ?Treinador{
+        return $this->trainers[$id] ?? null;
     }
 
-    public function listarTodos(): array{
-        return $this->treinadores;
+    public function listAll(): array{
+        return $this->trainers;
     }
 
-    public function removerTreinador(string $nome): bool{
-        foreach ($this->treinadores as $key => $treinador) {
-            if (strtolower($treinador->getNome()) === strtolower($nome)) {
-                unset($this->treinadores[$key]);
-                $this->treinadores = array_values($this->treinadores);
-                $this->salvarTreinadores();
+    public function removeTrainer(string $name): bool{
+        foreach ($this->trainers as $key => $trainer) {
+            if (strtolower($trainer->getName()) === strtolower($name)) {
+                unset($this->trainers[$key]);
+                $this->trainers = array_values($this->trainers);
+                $this->saveTrainers();
                 return true;
             }
         }
         return false;
     }
 
-    public function atualizarTreinador(string $nome, string $novoNome = null, int $novaIdade = null): bool{
-        $treinador = $this->buscarTreinador($nome);
-        if ($treinador === null) {
+    public function updateTrainer(string $name, string $newName = null, int $newAge = null): bool{
+        $trainer = $this->findTrainer($name);
+        if ($trainer === null) {
             return false;
         }
         
-        if ($novoNome !== null) {
-            $treinador->setNome($novoNome);
+        if ($newName !== null) {
+            $trainer->setName($newName);
         }
-        if ($novaIdade !== null) {
-            $treinador->setIdade($novaIdade);
+        if ($newAge !== null) {
+            $trainer->setAge($newAge);
         }
         
-        $this->salvarTreinadores();
+        $this->saveTrainers();
         return true;
     }
 
-    public function getTotalTreinadores(): int{
-        return count($this->treinadores);
+    public function getTotalTrainers(): int{
+        return count($this->trainers);
     }
 
-    public function estaVazia(): bool{
-        return empty($this->treinadores);
+    public function isEmpty(): bool{
+        return empty($this->trainers);
     }
 
-    private function salvarTreinadores(): bool{
+    public function saveTrainers(): bool{
         $dataToSave = [];
-        foreach ($this->treinadores as $treinador) {
-            $dataToSave[] = $treinador->treinadorToArray();
+        foreach ($this->trainers as $trainer) {
+            $dataToSave[] = $trainer->trainerToArray();
         }
         
         $json = json_encode($dataToSave, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
@@ -92,15 +92,15 @@ class GerenciadorTreinadores{
             return false;
         }
         
-        return file_put_contents($this->arquivo, $json) !== false;
+        return file_put_contents($this->file, $json) !== false;
     }
 
-    private function carregarTreinadores(): void{
-        if (!file_exists($this->arquivo)) {
+    private function loadTrainers(): void{
+        if (!file_exists($this->file)) {
             return;
         }
         
-        $fileContents = file_get_contents($this->arquivo);
+        $fileContents = file_get_contents($this->file);
         if ($fileContents === false) {
             return;
         }
@@ -110,9 +110,9 @@ class GerenciadorTreinadores{
             return;
         }
         
-        foreach ($data as $treinadorData) {
-            $treinador = Treinador::fromArray($treinadorData, $this->pokedex);
-            $this->treinadores[] = $treinador;
+        foreach ($data as $trainerData) {
+            $trainer = Treinador::fromArray($trainerData, $this->pokedex);
+            $this->trainers[] = $trainer;
         }
     }
 }

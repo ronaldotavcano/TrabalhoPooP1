@@ -161,7 +161,7 @@ public function removerPokemon(int $numero): bool{
 - **`public` métodos CRUD** (`adicionarTreinador()`, `buscarTreinador()`, `removerTreinador()`, `atualizarTreinador()`, `listarTodos()`):
   - **Por quê `public`?** Interface completa para operações CRUD, garantindo que todas as alterações passem por validação e persistência.
 
-- **`private` métodos de persistência** (`salvarTreinadores()`, `carregarTreinadores()`):
+- **`private` métodos de persistência** (`salvarTreinadores()`, `loadTrainers()`):
   - **Por quê `private`?** Detalhes de IO não devem ser expostos. A persistência acontece automaticamente após operações públicas.
 
 **Melhoria com função nativa:**
