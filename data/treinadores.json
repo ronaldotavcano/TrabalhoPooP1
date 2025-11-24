@@ -1,0 +1,21 @@
+[
+    {
+        "nome": "Ronaldo",
+        "idade": 20,
+        "pokemons": [
+            {
+                "nome": "bulbasaur",
+                "nivel": 1
+            },
+            {
+                "nome": "charmander",
+                "nivel": 1
+            }
+        ]
+    },
+    {
+        "nome": "Matheus",
+        "idade": 19,
+        "pokemons": []
+    }
+]

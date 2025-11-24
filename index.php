@@ -6,7 +6,7 @@ require_once 'vendor/autoload.php';
 use Src\SistemaPokedex;
 
 try {
-    $system = new SistemaPokedex();
+    $system = new SistemaPokedex(); // instância (objeto)
         
     $system->start();
     

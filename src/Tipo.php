@@ -16,7 +16,7 @@ class Tipo{
     public function getName(): string{
         return $this->name;
     }
-
+    // Fogo, in_array -> [PokemonsTipos] -> Fogo (Agua / Terra) // true 
     public function getWeakness(): array{
         return $this->weakeness;
     }
@@ -24,12 +24,12 @@ class Tipo{
     public function getResistance(): array{
         return $this->resistance;
     }
-                                            // tipo alvo -> ex: Fogo (alvo) é fraco contra ["água", "terrestre"]
+    // tipo alvo -> ex: Fogo (alvo) é fraco contra ["água", "terrestre"]
     public function isWeakAgainst(string $targetType): bool{
                 // função in_array procura no array se targetType está dentro do array de fraquezas se sim, return True
         return in_array($targetType, $this->weakeness);
     }
-                                            // tipo alvo -> ex: Fogo (alvo) é resistente contra ["água", "terrestre"]
+    // tipo alvo -> ex: Fogo (alvo) é resistente contra ["água", "terrestre"]
     public function isResistanceAgainst(string $targetType): bool{
         return in_array($targetType, $this->resistance);
     }

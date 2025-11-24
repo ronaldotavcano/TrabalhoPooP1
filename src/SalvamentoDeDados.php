@@ -18,7 +18,7 @@ use Src\Tipos\PokemonTerrestre;
 use Src\Tipos\PokemonVenenoso;
 use Src\Tipos\PokemonVoador;
 
-class PersistenciaPokemon{
+class SalvamentoDeDados{
     private string $dataFiles; 
 
     public function __construct(string $dataFiles = 'data/pokemons.json'){
@@ -30,7 +30,7 @@ class PersistenciaPokemon{
         $directory = dirname($this->dataFiles);
         
         if (!is_dir($directory)) {
-            mkdir($directory, 0755, true); // Cria o diretório, 0755 -> leitura + escrita + execução (rwx) para o dono, grupo e outros
+            mkdir($directory, 0755, true);
         }
     }
 
@@ -41,16 +41,13 @@ class PersistenciaPokemon{
                 $dataToSave[] = $pokemon->pokemonToArray();
             }
 
-            // Converte array para json com formatação
             $json = json_encode($dataToSave, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-            
             if ($json === false) {
                 return false;
             }
-            // escreve o conteúdo no arquivo json
+
             $results = file_put_contents($this->dataFiles, $json);
             return $results !== false;
-            
         } catch (Exception $e) {
             return false;
         }
@@ -62,15 +59,11 @@ class PersistenciaPokemon{
                 return [];
             }
             $fileContents = file_get_contents($this->dataFiles);
-            
             if ($fileContents === false) {
                 return [];
             }
 
-            // Decodifica o JSON
             $data = json_decode($fileContents, true);
-            
-            // Verifica se a decodificação foi bem-sucedida
             if ($data === null) {
                 return [];
             }
@@ -79,19 +72,17 @@ class PersistenciaPokemon{
             foreach ($data as $pokemonData) {
                 $pokemon = $this->createPokemonsArray($pokemonData);
                 if ($pokemon !== null) {
-                    $pokemons[] = $pokemon; // Adiciona Pokémon válido ao array
+                    $pokemons[] = $pokemon;
                 }
             }
             return $pokemons;  
-
         } catch (Exception $e) {
             return [];
         }
     }
-                                                        //Retorna um objeto da classe pokemon ou nulo
+
     private function createPokemonsArray(array $data): ?Pokemon{
         try {
-           
             if (!isset($data['classe'])) {
                 return null;
             }
@@ -139,3 +130,5 @@ class PersistenciaPokemon{
         return file_exists($this->dataFiles);
     }
 }
+
+

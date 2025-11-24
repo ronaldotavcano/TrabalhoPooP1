@@ -6,12 +6,12 @@ class Pokedex{
     
     private array $pokemons;
     private int $totalPokemons; 
-    private PersistenciaPokemon $persistencia; 
+    private SalvamentoDeDados $persistencia; 
 
     public function __construct(){
         $this->pokemons = []; 
         $this->totalPokemons = 0; 
-        $this->persistencia = new PersistenciaPokemon(); 
+        $this->persistencia = new SalvamentoDeDados(); 
         $this->loadData(); // Carrega dados salvos automaticamente
     }
 
@@ -40,8 +40,8 @@ class Pokedex{
             // Verifica se o name contém o termo buscado (busca parcial)
             if (stripos($pokemon->getName(), $name) !== false) {
                 $result[] = $pokemon; // Adiciona ao array de resultados
-            }
-        }       
+            } 
+        }      
         return $result;
     }
 
