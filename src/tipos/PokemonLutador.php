@@ -7,15 +7,7 @@ use Src\Tipo;
 
 class PokemonLutador extends Pokemon{
 
-    public function __construct(
-        string $name,
-        string $description,
-        int $number,
-        float $height,
-        float $weight,
-        ?Tipo $secondaryType = null
-    ){  
-        // Usa fonte única de verdade - Tipo ID 9 = Lutador
+    public function __construct(string $name,string $description,int $number,float $height,float $weight,?Tipo $secondaryType = null){  
         $fightingType = Tipo::createByTypeId(9);
         if ($fightingType === null) {
             throw new \Exception("Tipo Lutador não encontrado");

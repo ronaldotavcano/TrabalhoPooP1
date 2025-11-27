@@ -7,15 +7,7 @@ use Src\Tipo;
 
 class PokemonNormal extends Pokemon{
 
-    public function __construct(
-        string $name,
-        string $description,
-        int $number,
-        float $height,
-        float $weight,
-        ?Tipo $secondaryType = null
-    ){  
-        // Usa fonte única de verdade - Tipo ID 10 = Normal
+    public function __construct(string $name,string $description,int $number,float $height,float $weight,?Tipo $secondaryType = null){  
         $normalType = Tipo::createByTypeId(10);
         if ($normalType === null) {
             throw new \Exception("Tipo Normal não encontrado");

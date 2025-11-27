@@ -7,15 +7,7 @@ use Src\Tipo;
 
 class PokemonDragao extends Pokemon{
 
-    public function __construct(
-        string $name,
-        string $description,
-        int $number,
-        float $height,
-        float $weight,
-        ?Tipo $secondaryType = null
-    ){  
-        // Usa fonte única de verdade - Tipo ID 6 = Dragão
+    public function __construct(string $name,string $description,int $number,float $height,float $weight,?Tipo $secondaryType = null){  
         $dragonType = Tipo::createByTypeId(6);
         if ($dragonType === null) {
             throw new \Exception("Tipo Dragão não encontrado");

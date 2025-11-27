@@ -7,15 +7,7 @@ use Src\Tipo;
 
 class PokemonPlanta extends Pokemon{
 
-    public function __construct(
-        string $name,
-        string $description,
-        int $number,
-        float $height,
-        float $weight,
-        ?Tipo $secondaryType = null
-    ) {
-        // Usa fonte única de verdade - Tipo ID 3 = Planta
+    public function __construct(string $name,string $description,int $number,float $height,float $weight,?Tipo $secondaryType = null) {
         $grassType = Tipo::createByTypeId(3);
         if ($grassType === null) {
             throw new \Exception("Tipo Planta não encontrado");

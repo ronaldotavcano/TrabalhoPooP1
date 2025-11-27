@@ -73,25 +73,6 @@ class Treinador{
         return null;
     }
 
-    public function updatePokemonLevel(int $number, int $newLevel): bool{
-        if ($newLevel < 1) {
-            return false;
-        }
-        
-        foreach ($this->pokemons as $key => $p) {
-            if ($p['pokemon']->getNumber() === $number) {
-                $currentLevel = $p['level'];
-                if ($newLevel <= $currentLevel) {
-                    return false;
-                }
-                
-                $this->pokemons[$key]['level'] = $newLevel;
-                return true;
-            }
-        }
-        return false;
-    }
-
     public function getTotalPokemons(): int{
         return count($this->pokemons);
     }

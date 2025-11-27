@@ -10,22 +10,16 @@
             {
                 "nome": "charmander",
                 "nivel": 1
+            },
+            {
+                "nome": "charmeleon",
+                "nivel": 23
             }
         ]
     },
     {
         "nome": "Matheus",
         "idade": 19,
-        "pokemons": [
-            {
-                "nome": "Rayquaza",
-                "nivel": 70
-            }
-        ]
-    },
-    {
-        "nome": "Anao",
-        "idade": 18,
         "pokemons": []
     }
 ]

@@ -7,15 +7,7 @@ use Src\Tipo;
 
 class PokemonVenenoso extends Pokemon{
 
-    public function __construct(
-        string $name,
-        string $description,
-        int $number,
-        float $height,
-        float $weight,
-        ?Tipo $secondaryType = null
-    ){  
-        // Usa fonte única de verdade - Tipo ID 14 = Venenoso
+    public function __construct(string $name,string $description,int $number,float $height,float $weight,?Tipo $secondaryType = null){  
         $poisonType = Tipo::createByTypeId(14);
         if ($poisonType === null) {
             throw new \Exception("Tipo Venenoso não encontrado");

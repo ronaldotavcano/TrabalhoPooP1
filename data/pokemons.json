@@ -201,39 +201,5 @@
             ]
         },
         "classe": "PokemonPsiquico"
-    },
-    {
-        "nome": "Rayquaza",
-        "descrição": "pika pra krl",
-        "numero": 777,
-        "altura": 7,
-        "peso": 120,
-        "tipo_primario": {
-            "nome": "Dragão",
-            "fraquezas": [
-                "Gelo",
-                "Dragão"
-            ],
-            "resistencia": [
-                "Fogo",
-                "Água",
-                "Elétrico",
-                "Grama"
-            ]
-        },
-        "tipo_secundario": {
-            "nome": "Voador",
-            "fraquezas": [
-                "Elétrico",
-                "Gelo",
-                "Pedra"
-            ],
-            "resistencia": [
-                "Grama",
-                "Lutador",
-                "Inseto"
-            ]
-        },
-        "classe": "PokemonDragao"
-    }
+    }  
 ]

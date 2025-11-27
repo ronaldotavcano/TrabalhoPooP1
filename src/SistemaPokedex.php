@@ -166,7 +166,7 @@ class SistemaPokedex{
     }
 
     private function createTipoByNumber(int $numero): ?Tipo{
-        // Usa fonte única de verdade da classe Tipo
+        // 
         return Tipo::createByTypeId($numero);
     }
 
@@ -246,7 +246,6 @@ class SistemaPokedex{
     private function showStatistics(): void{
         echo "\n" . $this->pokedex->showRecord() . "\n";
     }
-    // Novo Código
 
     // Funcionalidades de Treinador
     private function registerTrainer(): void{
@@ -319,7 +318,7 @@ class SistemaPokedex{
         
         // Menu para gerenciar Pokémon
         $managePokemon = readline("\nDeseja gerenciar Pokémon do treinador? (s/n): ");
-        if (strtolower(trim($managePokemon)) === 's') {
+        if (strtolower(trim($managePokemon)) === 's' || strtolower(trim($managePokemon)) === 'sim') {
             $this->manageTrainerPokemons($trainer);
         }
         
@@ -337,8 +336,7 @@ class SistemaPokedex{
             echo "\n--- GERENCIAR POKÉMON DO TREINADOR ---\n";
             echo "1) Adicionar Pokémon\n";
             echo "2) Remover Pokémon\n";
-            echo "3) Alterar nível de Pokémon\n";
-            echo "4) Ver Pokémon do treinador\n";
+            echo "3) Ver Pokémon do treinador\n";
             echo "0) Voltar\n";
             
             $option = (int) readline("Escolha uma opção: ");
@@ -351,9 +349,6 @@ class SistemaPokedex{
                     $this->removePokemonFromTrainer($trainer);
                     break;
                 case 3:
-                    $this->updatePokemonLevelInTrainer($trainer);
-                    break;
-                case 4:
                     echo "\n" . $trainer->showInfos() . "\n";
                     break;
                 case 0:
@@ -379,9 +374,12 @@ class SistemaPokedex{
         if ($level < 1) {
             $level = 1;
         }
+        elseif( $level > 100){
+            $level = 100;
+        }
         
         if ($trainer->addPokemon($pokemon, $level)) {
-            echo "Pokémon adicionado ao treinador (Nível {$level})!\n";
+            echo "Pokémon adicionado ao treinador com sucesso!\n";
         } else {
             echo "Este Pokémon já está com o treinador!\n";
         }
@@ -413,49 +411,6 @@ class SistemaPokedex{
             echo "Pokémon removido com sucesso!\n";
         } else {
             echo "Erro ao remover Pokémon!\n";
-        }
-    }
-
-    private function updatePokemonLevelInTrainer(Treinador $trainer): void{
-        echo "\n--- ALTERAR NÍVEL DE POKÉMON ---\n";
-        
-        $pokemons = $trainer->getPokemons();
-        if (empty($pokemons)) {
-            echo "O treinador não possui Pokémon!\n";
-            return;
-        }
-        
-        echo "\nPokémon do treinador:\n";
-        foreach ($pokemons as $index => $p) {
-            echo ($index + 1) . ") " . $p['pokemon']->showSummary() . " (Nível {$p['level']})\n";
-        }
-        
-        $choice = (int) readline("\nEscolha o número do Pokémon para alterar o nível (0 para cancelar): ");
-        if ($choice === 0 || $choice < 1 || $choice > count($pokemons)) {
-            return;
-        }
-        
-        $pokemonToUpdate = $pokemons[$choice - 1];
-        $number = $pokemonToUpdate['pokemon']->getNumber();
-        $currentLevel = $pokemonToUpdate['level'];
-        
-        echo "Nível atual: {$currentLevel}\n";
-        $newLevel = (int) readline("Digite o novo nível (1-100): ");
-        
-        if ($newLevel < 1 || $newLevel > 100) {
-            echo "Nível inválido! Deve ser entre 1 e 100.\n";
-            return;
-        }
-        
-        if ($newLevel <= $currentLevel) {
-            echo "O novo nível deve ser maior que o nível atual ({$currentLevel}).\n";
-            return;
-        }
-        
-        if ($trainer->updatePokemonLevel($number, $newLevel)) {
-            echo "Nível do Pokémon atualizado para {$newLevel}!\n";
-        } else {
-            echo "Erro ao atualizar nível do Pokémon!\n";
         }
     }
 
@@ -502,7 +457,7 @@ class SistemaPokedex{
     }
 
     private function showExitMessage(): void{
-        echo "\nObrigado por usar o nosso protótipo de Pokedex.\n";
+        echo "\nObrigado por usar o nosso projeto.\n";
         echo "Essa foi a 2ª versão da nossa Pokedex\n";
         echo "Esperamos que tenha gostado\n";
     }

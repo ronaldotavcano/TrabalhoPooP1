@@ -101,6 +101,7 @@ class SalvamentoDeDados{
             switch ($data['classe']) {
                 case 'PokemonAgua':
                     // cria um nova instancia para o tipo agua e accesa o método estático fromArray (pega os dados do array e transforma em um objeto)
+                    // como se ele fizesse um mini construct, permite acessar os métodos e variáveis do objeto PokemonAgua
                     return PokemonAgua::fromArray($data);
                 case 'PokemonDragao':
                     return PokemonDragao::fromArray($data);

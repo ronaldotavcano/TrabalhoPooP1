@@ -7,15 +7,7 @@ use Src\Tipo;
 
 class PokemonFantasma extends Pokemon{
 
-    public function __construct(
-        string $name,
-        string $description,
-        int $number,
-        float $height,
-        float $weight,
-        ?Tipo $secondaryType = null
-    ){  
-        // Usa fonte única de verdade - Tipo ID 7 = Fantasma
+    public function __construct(string $name,string $description,int $number,float $height,float $weight,?Tipo $secondaryType = null){  
         $ghostType = Tipo::createByTypeId(7);
         if ($ghostType === null) {
             throw new \Exception("Tipo Fantasma não encontrado");

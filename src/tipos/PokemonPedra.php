@@ -7,20 +7,11 @@ use Src\Tipo;
 
 class PokemonPedra extends Pokemon{
 
-    public function __construct(
-        string $name,
-        string $description,
-        int $number,
-        float $height,
-        float $weight,
-        ?Tipo $secondaryType = null
-    ){  
-        // Usa fonte única de verdade - Tipo ID 11 = Pedra
+    public function __construct(string $name,string $description,int $number,float $height,float $weight,?Tipo $secondaryType = null){  
         $rockType = Tipo::createByTypeId(11);
         if ($rockType === null) {
             throw new \Exception("Tipo Pedra não encontrado");
         }
-
         // Chama o construtor da classe pai (Pokemon)
         parent::__construct($name, $rockType,$secondaryType, $description, $number, $height, $weight);
     }

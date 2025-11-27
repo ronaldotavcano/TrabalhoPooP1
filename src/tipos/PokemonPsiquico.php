@@ -7,14 +7,7 @@ use Src\Tipo;
 
 class PokemonPsiquico extends Pokemon{
 
-    public function __construct(
-        string $name,
-        string $description,
-        int $number,
-        float $height,
-        float $weight,
-        ?Tipo $secondaryType = null
-    ){
+    public function __construct(string $name,string $description,int $number,float $height,float $weight,?Tipo $secondaryType = null){
         // Usa fonte única de verdade - Tipo ID 12 = Psíquico
         $psychicType = Tipo::createByTypeId(12);
         if ($psychicType === null) {
