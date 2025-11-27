@@ -15,11 +15,11 @@ class PokemonFantasma extends Pokemon{
         float $weight,
         ?Tipo $secondaryType = null
     ){  
-        $ghostType = new Tipo(
-            "Fantasma",                 // Tipo
-            ["Fantasma"],               // Fraquezas
-            ["Venenoso", "Inseto"]      // Resistencias
-        );
+        // Usa fonte única de verdade - Tipo ID 7 = Fantasma
+        $ghostType = Tipo::createByTypeId(7);
+        if ($ghostType === null) {
+            throw new \Exception("Tipo Fantasma não encontrado");
+        }
 
         // Chama o construtor da classe pai (Pokemon)
         parent::__construct($name, $ghostType,$secondaryType, $description, $number, $height, $weight);

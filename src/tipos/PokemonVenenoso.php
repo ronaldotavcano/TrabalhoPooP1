@@ -15,11 +15,11 @@ class PokemonVenenoso extends Pokemon{
         float $weight,
         ?Tipo $secondaryType = null
     ){  
-        $poisonType = new Tipo(
-            "Venenoso",                                 // Tipo
-            ["Terrestre", "Psíquico", ],                // Fraqueza
-            ["Grama", "Lutador", "Venenoso", "Inseto"]  // Resistencia
-        );
+        // Usa fonte única de verdade - Tipo ID 14 = Venenoso
+        $poisonType = Tipo::createByTypeId(14);
+        if ($poisonType === null) {
+            throw new \Exception("Tipo Venenoso não encontrado");
+        }
 
         // Chama o construtor da classe pai (Pokemon)
         parent::__construct($name, $poisonType,$secondaryType, $description, $number, $height, $weight);

@@ -15,11 +15,11 @@ class PokemonTerrestre extends Pokemon{
         float $weight,
         ?Tipo $secondaryType = null
     ){
-        $groundType = new Tipo(
-            "Terrestre",                // Tipo
-            ["Água", "Grama", " Gelo"], // Fraqueza
-            ["Venenoso", "Pedra"]       // Resistencia
-        );
+        // Usa fonte única de verdade - Tipo ID 13 = Terrestre
+        $groundType = Tipo::createByTypeId(13);
+        if ($groundType === null) {
+            throw new \Exception("Tipo Terrestre não encontrado");
+        }
 
         // Chama o construtor da classe pai (Pokemon)
         parent::__construct($name, $groundType,$secondaryType, $description, $number, $height, $weight);

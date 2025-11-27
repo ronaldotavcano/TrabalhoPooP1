@@ -16,11 +16,11 @@ class PokemonGelo extends Pokemon{
         float $weight,
         ?Tipo $secondaryType = null
     ) {
-        $iceType = new Tipo(
-            "Gelo",                                 // Tipo
-            ["Fogo", "Lutador", "Pedra", "Aço"],    // Fraquezas 
-            ["Planta", "Terra", "Voador", "Dragão"] // Resistencias
-        );
+        // Usa fonte única de verdade - Tipo ID 5 = Gelo
+        $iceType = Tipo::createByTypeId(5);
+        if ($iceType === null) {
+            throw new \Exception("Tipo Gelo não encontrado");
+        }
         parent::__construct($name, $iceType, $secondaryType, $description, $number, $height, $weight);
     }
 

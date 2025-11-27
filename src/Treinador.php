@@ -73,6 +73,25 @@ class Treinador{
         return null;
     }
 
+    public function updatePokemonLevel(int $number, int $newLevel): bool{
+        if ($newLevel < 1) {
+            return false;
+        }
+        
+        foreach ($this->pokemons as $key => $p) {
+            if ($p['pokemon']->getNumber() === $number) {
+                $currentLevel = $p['level'];
+                if ($newLevel <= $currentLevel) {
+                    return false;
+                }
+                
+                $this->pokemons[$key]['level'] = $newLevel;
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function getTotalPokemons(): int{
         return count($this->pokemons);
     }
@@ -100,7 +119,7 @@ class Treinador{
             foreach ($data['pokemons'] as $pokemonData) {
                 // Se for formato antigo (com todos os dados), busca pelo número
                 if (isset($pokemonData['numero'])) {
-                    $pokemon = $pokedex->searchByNumber($pokemonData['numero']);
+                    $pokemon = $pokedex->searchPokemonByNumber($pokemonData['numero']);
                     $level = $pokemonData['nivel'] ?? 1;
                     if ($pokemon !== null) {
                         $pokemons[] = ['pokemon' => $pokemon, 'level' => $level];
@@ -108,7 +127,7 @@ class Treinador{
                 }
                 // Se for formato novo (apenas nome e nível)
                 elseif (isset($pokemonData['nome'])) {
-                    $foundPokemons = $pokedex->searchByName($pokemonData['nome']);
+                    $foundPokemons = $pokedex->searchPokemonByName($pokemonData['nome']);
                     if (!empty($foundPokemons)) {
                         // Pega o primeiro Pokémon encontrado com esse nome
                         $pokemon = $foundPokemons[0];

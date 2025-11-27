@@ -24,98 +24,24 @@ class SistemaPokedex{
     private GerenciadorTreinadores $trainerManager;
     private bool $systemOn;
     
-    // Array centralizado com informações dos tipos e classes correspondentes 
+    // Array com mapeamento de tipos para classes (fraquezas/resistências vêm de Tipo::TYPES_DATA)
     private const TIPOS_POKEMON = [
-        1 => [
-            'nome' => 'Fogo',
-            'fraquezas' => ['Água', 'Terra'],
-            'resistencia' => ['Planta', 'Gelo', 'Aço'],
-            'classe' => PokemonFogo::class
-        ],
-        2 => [
-            'nome' => 'Água',
-            'fraquezas' => ['Planta', 'Elétrico'],
-            'resistencia' => ['Fogo', 'Terra', 'Pedra'],
-            'classe' => PokemonAgua::class
-        ],
-        3 => [
-            'nome' => 'Planta',
-            'fraquezas' => ['Fogo', 'Gelo', 'Venenoso', 'Voador', 'Inseto'],
-            'resistencia' => ['Água', 'Terra', 'Pedra', 'Elétrico'],
-            'classe' => PokemonPlanta::class
-        ],
-        4 => [
-            'nome' => 'Elétrico',
-            'fraquezas' => ['Terra'],
-            'resistencia' => ['Voador', 'Água', 'Aço'],
-            'classe' => PokemonEletrico::class
-        ],
-        5 => [
-            'nome' => 'Gelo',
-            'fraquezas' => ['Fogo', 'Lutador', 'Pedra', 'Aço'],
-            'resistencia' => ['Planta', 'Terra', 'Voador', 'Dragão'],
-            'classe' => PokemonGelo::class
-        ],
-        6 => [
-            'nome' => 'Dragão',
-            'fraquezas' => ['Gelo', 'Dragão'],
-            'resistencia' => ['Fogo', 'Água', 'Elétrico', 'Grama'],
-            'classe' => PokemonDragao::class
-        ],
-        7 => [
-            'nome' => 'Fantasma',
-            'fraquezas' => ['Fantasma'],
-            'resistencia' => ['Venenoso', 'Inseto'],
-            'classe' => PokemonFantasma::class
-        ],
-        8 => [
-            'nome' => 'Inseto',
-            'fraquezas' => ['Fogo', 'Voador', 'Pedra'],
-            'resistencia' => ['Planta', 'Lutador', 'Terrestre'],
-            'classe' => PokemonInseto::class
-        ],
-        9 => [
-            'nome' => 'Lutador',
-            'fraquezas' => ['Voador', 'Psíquico'],
-            'resistencia' => ['Inseto', 'Pedra'],
-            'classe' => PokemonLutador::class
-        ],
-        10 => [
-            'nome' => 'Normal',
-            'fraquezas' => ['Lutador'],
-            'resistencia' => [''],
-            'classe' => PokemonNormal::class
-        ],
-        11 => [
-            'nome' => 'Pedra',
-            'fraquezas' => ['Água', 'Planta', 'Lutador', 'Terrestre'],
-            'resistencia' => ['Fogo', 'Normal', 'Voador', 'Venenoso'],
-            'classe' => PokemonPedra::class
-        ],
-        12 => [
-            'nome' => 'Psíquico',
-            'fraquezas' => ['Inseto', 'Fantasma'],
-            'resistencia' => ['Lutador', 'Psíquico'],
-            'classe' => PokemonPsiquico::class
-        ],
-        13 => [
-            'nome' => 'Terrestre',
-            'fraquezas' => ['Água', 'Grama', 'Gelo'],
-            'resistencia' => ['Venenoso', 'Pedra'],
-            'classe' => PokemonTerrestre::class
-        ],
-        14 => [
-            'nome' => 'Venenoso',
-            'fraquezas' => ['Terrestre', 'Psíquico'],
-            'resistencia' => ['Grama', 'Lutador', 'Venenoso', 'Inseto'],
-            'classe' => PokemonVenenoso::class
-        ],
-        15 => [
-            'nome' => 'Voador',
-            'fraquezas' => ['Elétrico', 'Gelo', 'Pedra'],
-            'resistencia' => ['Grama', 'Lutador', 'Inseto'],
-            'classe' => PokemonVoador::class
-        ]
+    // chave                   // nome da classe (::class -> retorna o nome da classe em forma de string)
+        1 => ['classe' => PokemonFogo::class],
+        2 => ['classe' => PokemonAgua::class],
+        3 => ['classe' => PokemonPlanta::class],
+        4 => ['classe' => PokemonEletrico::class],
+        5 => ['classe' => PokemonGelo::class],
+        6 => ['classe' => PokemonDragao::class],
+        7 => ['classe' => PokemonFantasma::class],
+        8 => ['classe' => PokemonInseto::class],
+        9 => ['classe' => PokemonLutador::class],
+        10 => ['classe' => PokemonNormal::class],
+        11 => ['classe' => PokemonPedra::class],
+        12 => ['classe' => PokemonPsiquico::class],
+        13 => ['classe' => PokemonTerrestre::class],
+        14 => ['classe' => PokemonVenenoso::class],
+        15 => ['classe' => PokemonVoador::class]
     ];
 
     public function __construct(){
@@ -140,6 +66,8 @@ class SistemaPokedex{
         echo "\n     SISTEMA DE POKÉDEX \n";
         echo "Bem-vindo ao sistema de gerenciamento de Pokémon!\n";
         echo "Aqui você pode cadastrar, buscar e gerenciar seus Pokémon.\n";
+        echo "Agora na  segunda versão, você também pode Adicionar um treinador.\n";
+        echo "editar as informações do treinador ou excluir o treinador.\n";
     }
 
     private function showMenu(): void{
@@ -229,26 +157,17 @@ class SistemaPokedex{
         }
     }
 
-    // Método centralizado para exibir menu de tipos (remove duplicação)
     private function showTypesMenu(): void{
         echo "\nTipos disponíveis:\n";
-        foreach (self::TIPOS_POKEMON as $numero => $tipo) {
+        $allTypes = Tipo::getAllTypes();
+        foreach ($allTypes as $numero => $tipo) {
             echo "{$numero}) {$tipo['nome']}\n";
         }
     }
 
-    // Método centralizado para criar tipo (remove duplicação)
     private function createTipoByNumber(int $numero): ?Tipo{
-        if (!isset(self::TIPOS_POKEMON[$numero])) {
-            return null;
-        }
-        
-        $tipoData = self::TIPOS_POKEMON[$numero];
-        return new Tipo(
-            $tipoData['nome'],
-            $tipoData['fraquezas'],
-            $tipoData['resistencia']
-        );
+        // Usa fonte única de verdade da classe Tipo
+        return Tipo::createByTypeId($numero);
     }
 
     private function createPokemonByType(int $optionType, string $name, string $description, int $number, float $height, float $weight): ?Pokemon{
@@ -284,7 +203,7 @@ class SistemaPokedex{
         echo "\n--- BUSCAR POR NÚMERO ---\n";
         $number = (int) readline("Digite o número do Pokémon: ");
         
-        $pokemon = $this->pokedex->searchByNumber($number);
+        $pokemon = $this->pokedex->searchPokemonByNumber($number);
         
         if ($pokemon !== null) {
             echo "\n" . $pokemon->showInfos() . "\n";
@@ -297,7 +216,7 @@ class SistemaPokedex{
         echo "\n--- BUSCAR POR NOME ---\n";
         $name = readline("Digite o nome do Pokémon: ");
         
-        $pokemons = $this->pokedex->searchByName($name);
+        $pokemons = $this->pokedex->searchPokemonByName($name);
         
         if (!empty($pokemons)) {
             echo "\nPokémon encontrados:\n";
@@ -312,12 +231,12 @@ class SistemaPokedex{
     private function listAll(): void{
         echo "\n--- TODOS OS POKÉMON ---\n";
         
-        if ($this->pokedex->isEmpty()) {
+        if ($this->pokedex->isPokedexEmpty()) {
             echo "A Pokédex está vazia!\n";
             return;
         }
         
-        $pokemons = $this->pokedex->listAll();
+        $pokemons = $this->pokedex->listAllPokemons();
         
         foreach ($pokemons as $pokemon) {
             echo $pokemon->showSummary() . "\n";
@@ -327,6 +246,7 @@ class SistemaPokedex{
     private function showStatistics(): void{
         echo "\n" . $this->pokedex->showRecord() . "\n";
     }
+    // Novo Código
 
     // Funcionalidades de Treinador
     private function registerTrainer(): void{
@@ -360,7 +280,7 @@ class SistemaPokedex{
                 continue;
             }
             
-            $pokemon = $this->pokedex->searchByNumber($number);
+            $pokemon = $this->pokedex->searchPokemonByNumber($number);
             if ($pokemon !== null) {
                 $level = (int) readline("Digite o nível do Pokémon (padrão: 1): ");
                 if ($level < 1) {
@@ -397,10 +317,145 @@ class SistemaPokedex{
         $finalName = trim($newName) !== '' ? $newName : null;
         $finalAge = trim($newAge) !== '' ? (int) $newAge : null;
         
+        // Menu para gerenciar Pokémon
+        $managePokemon = readline("\nDeseja gerenciar Pokémon do treinador? (s/n): ");
+        if (strtolower(trim($managePokemon)) === 's') {
+            $this->manageTrainerPokemons($trainer);
+        }
+        
         if ($this->trainerManager->updateTrainer($name, $finalName, $finalAge)) {
+            $this->trainerManager->saveTrainers();
             echo "Treinador atualizado com sucesso!\n";
         } else {
             echo "Erro ao atualizar treinador!\n";
+        }
+    }
+
+    private function manageTrainerPokemons(Treinador $trainer): void{
+        $continue = true;
+        while ($continue) {
+            echo "\n--- GERENCIAR POKÉMON DO TREINADOR ---\n";
+            echo "1) Adicionar Pokémon\n";
+            echo "2) Remover Pokémon\n";
+            echo "3) Alterar nível de Pokémon\n";
+            echo "4) Ver Pokémon do treinador\n";
+            echo "0) Voltar\n";
+            
+            $option = (int) readline("Escolha uma opção: ");
+            
+            switch ($option) {
+                case 1:
+                    $this->addPokemonToTrainer($trainer);
+                    break;
+                case 2:
+                    $this->removePokemonFromTrainer($trainer);
+                    break;
+                case 3:
+                    $this->updatePokemonLevelInTrainer($trainer);
+                    break;
+                case 4:
+                    echo "\n" . $trainer->showInfos() . "\n";
+                    break;
+                case 0:
+                    $continue = false;
+                    break;
+                default:
+                    echo "Opção inválida!\n";
+            }
+        }
+    }
+
+    private function addPokemonToTrainer(Treinador $trainer): void{
+        echo "\n--- ADICIONAR POKÉMON ---\n";
+        $number = (int) readline("Digite o número do Pokémon para adicionar: ");
+        
+        $pokemon = $this->pokedex->searchPokemonByNumber($number);
+        if ($pokemon === null) {
+            echo "Pokémon não encontrado na Pokédex!\n";
+            return;
+        }
+        
+        $level = (int) readline("Digite o nível do Pokémon (padrão: 1): ");
+        if ($level < 1) {
+            $level = 1;
+        }
+        
+        if ($trainer->addPokemon($pokemon, $level)) {
+            echo "Pokémon adicionado ao treinador (Nível {$level})!\n";
+        } else {
+            echo "Este Pokémon já está com o treinador!\n";
+        }
+    }
+
+    private function removePokemonFromTrainer(Treinador $trainer): void{
+        echo "\n--- REMOVER POKÉMON ---\n";
+        
+        $pokemons = $trainer->getPokemons();
+        if (empty($pokemons)) {
+            echo "O treinador não possui Pokémon!\n";
+            return;
+        }
+        
+        echo "\nPokémon do treinador:\n";
+        foreach ($pokemons as $index => $p) {
+            echo ($index + 1) . ") " . $p['pokemon']->showSummary() . " (Nível {$p['level']})\n";
+        }
+        
+        $choice = (int) readline("\nEscolha o número do Pokémon para remover (0 para cancelar): ");
+        if ($choice === 0 || $choice < 1 || $choice > count($pokemons)) {
+            return;
+        }
+        
+        $pokemonToRemove = $pokemons[$choice - 1];
+        $number = $pokemonToRemove['pokemon']->getNumber();
+        
+        if ($trainer->removePokemon($number)) {
+            echo "Pokémon removido com sucesso!\n";
+        } else {
+            echo "Erro ao remover Pokémon!\n";
+        }
+    }
+
+    private function updatePokemonLevelInTrainer(Treinador $trainer): void{
+        echo "\n--- ALTERAR NÍVEL DE POKÉMON ---\n";
+        
+        $pokemons = $trainer->getPokemons();
+        if (empty($pokemons)) {
+            echo "O treinador não possui Pokémon!\n";
+            return;
+        }
+        
+        echo "\nPokémon do treinador:\n";
+        foreach ($pokemons as $index => $p) {
+            echo ($index + 1) . ") " . $p['pokemon']->showSummary() . " (Nível {$p['level']})\n";
+        }
+        
+        $choice = (int) readline("\nEscolha o número do Pokémon para alterar o nível (0 para cancelar): ");
+        if ($choice === 0 || $choice < 1 || $choice > count($pokemons)) {
+            return;
+        }
+        
+        $pokemonToUpdate = $pokemons[$choice - 1];
+        $number = $pokemonToUpdate['pokemon']->getNumber();
+        $currentLevel = $pokemonToUpdate['level'];
+        
+        echo "Nível atual: {$currentLevel}\n";
+        $newLevel = (int) readline("Digite o novo nível (1-100): ");
+        
+        if ($newLevel < 1 || $newLevel > 100) {
+            echo "Nível inválido! Deve ser entre 1 e 100.\n";
+            return;
+        }
+        
+        if ($newLevel <= $currentLevel) {
+            echo "O novo nível deve ser maior que o nível atual ({$currentLevel}).\n";
+            return;
+        }
+        
+        if ($trainer->updatePokemonLevel($number, $newLevel)) {
+            echo "Nível do Pokémon atualizado para {$newLevel}!\n";
+        } else {
+            echo "Erro ao atualizar nível do Pokémon!\n";
         }
     }
 
@@ -418,12 +473,12 @@ class SistemaPokedex{
     private function listTrainers(): void{
         echo "\n--- TODOS OS TREINADORES ---\n";
         
-        if ($this->trainerManager->isEmpty()) {
+        if ($this->trainerManager->isTrainersEmpty()) {
             echo "Não há treinadores cadastrados!\n";
             return;
         }
         
-        $trainers = $this->trainerManager->listAll();
+        $trainers = $this->trainerManager->listAllTrainers();
         foreach ($trainers as $index => $trainer) {
             echo ($index + 1) . ") " . $trainer->getName() . " - " . $trainer->getAge() . " anos - " . $trainer->getTotalPokemons() . " Pokémon(s)\n";
         }
@@ -448,6 +503,7 @@ class SistemaPokedex{
 
     private function showExitMessage(): void{
         echo "\nObrigado por usar o nosso protótipo de Pokedex.\n";
-        echo "Essa foi a 1ª versão da nossa Pokedex, até a próxima, quando ela estiver mais completa\n";
+        echo "Essa foi a 2ª versão da nossa Pokedex\n";
+        echo "Esperamos que tenha gostado\n";
     }
 }

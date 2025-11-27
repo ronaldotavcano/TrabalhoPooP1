@@ -15,11 +15,11 @@ class PokemonLutador extends Pokemon{
         float $weight,
         ?Tipo $secondaryType = null
     ){  
-        $fightingType = new Tipo(
-            "Lutador",                  // Tipo
-            ["Voador", "Psíquico"],     // Fraquezas
-            ["Inseto", "Pedra"]         // Resistencias
-        );
+        // Usa fonte única de verdade - Tipo ID 9 = Lutador
+        $fightingType = Tipo::createByTypeId(9);
+        if ($fightingType === null) {
+            throw new \Exception("Tipo Lutador não encontrado");
+        }
 
         // Chama o construtor da classe pai (Pokemon)
         parent::__construct($name, $fightingType,$secondaryType, $description, $number, $height, $weight);

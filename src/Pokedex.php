@@ -12,15 +12,16 @@ class Pokedex{
         $this->pokemons = []; 
         $this->totalPokemons = 0; 
         $this->persistencia = new SalvamentoDeDados(); 
-        $this->loadData(); // Carrega dados salvos automaticamente
+        $this->loadData(); 
     }
 
     public function addPokemon(Pokemon $pokemon): bool{
         
-        if ($this->searchByNumber($pokemon->getNumber()) !== null) {
+        // procura um pokemon pelo numero, se existir um pokemon com aquele numero bloqueia a ação
+        if ($this->searchPokemonByNumber($pokemon->getNumber()) !== null) {
             return false; 
         }
-
+        // se não existir ele adiciona no array $pokemons usando o número como chave e o $pokemon como o valor
         $this->pokemons[$pokemon->getNumber()] = $pokemon;
         $this->totalPokemons++;
         $this->saveData();
@@ -28,11 +29,12 @@ class Pokedex{
         return true;
     }
 
-    public function searchByNumber(int $number): ?Pokemon{
+    public function searchPokemonByNumber(int $number): ?Pokemon{
+        // procura dentro do array pokemons pelo número, se não achar retorna null
         return $this->pokemons[$number] ?? null;
     }
 
-    public function searchByName(string $name): array{
+    public function searchPokemonByName(string $name): array{
         $result = []; 
         
         // Percorre todos os Pokémon no array
@@ -45,21 +47,25 @@ class Pokedex{
         return $result;
     }
 
-    public function listAll(): array{
+    public function listAllPokemons(): array{
+        // lista o array de pokemons
         return $this->pokemons;
     }
 
     public function getTotalPokemons(): int{
+        // retorna o número total de pokemons
         return $this->totalPokemons;
     }
 
-    public function isEmpty(): bool{
+    public function isPokedexEmpty(): bool{
+        // verifica se o array está vazio, se sim retorna 1 se não 0, empty -> nativo do php
         return empty($this->pokemons);
     }
 
     public function getStatistics(): array{
         $statistics = [
             'total' => $this->totalPokemons,
+            // quantos pokemons tem em cada tipagem
             'por_tipo' => [],
             'mais_pesado' => null,
             'mais_alto' => null
@@ -82,6 +88,7 @@ class Pokedex{
                 if (!isset($statistics['por_tipo'][$secondaryType])) {
                     $statistics['por_tipo'][$secondaryType] = 0;
                 }
+                // incrementa +1 no tipo secundário
                 $statistics['por_tipo'][$secondaryType]++;
             }
 
@@ -101,7 +108,7 @@ class Pokedex{
     }
 
     public function showRecord(): string{
-        if ($this->isEmpty() ) {
+        if ($this->isPokedexEmpty() ) {
             return "A Pokédex está vazia!\n";
         }
         $record = "=== RELATÓRIO DA POKÉDEX ===\n";
@@ -109,15 +116,18 @@ class Pokedex{
         $record .= "Total de Pokémon: {$statistics['total']}\n\n";
         $record .= "Pokémon por tipo:\n";
 
+        // percorre todos os tipos e mostra sua quantidade
         foreach ($statistics['por_tipo'] as $tipo => $quantity) {
             $record .= "- {$tipo}: {$quantity}\n";
         }
         
         if ($statistics['mais_pesado']) {
+                                                                        // retorna um resumo do pokemon mais pesado
             $record .= "\nPokémon mais pesado: {$statistics['mais_pesado']->showSummary()} ({$statistics['mais_pesado']->getWeight()}kg)\n";
         }
         
         if ($statistics['mais_alto']) {
+                                                                        // retorna um resumo do pokemon mais alto
             $record .= "Pokémon mais alto: {$statistics['mais_alto']->showSummary()} ({$statistics['mais_alto']->getHeight()}m)\n";
         }
         return $record;
@@ -127,11 +137,11 @@ class Pokedex{
         try {
             $pokemonsCarregados = $this->persistencia->loadPokemons();
             
-            // Limpa dados atuais
+            // Limpa dados antigos
             $this->pokemons = [];
             $this->totalPokemons = 0;
             
-            // Adiciona Pokémon carregados
+            // Adiciona Pokémon carregados (dados novos)
             foreach ($pokemonsCarregados as $pokemon) {
                 $this->pokemons[$pokemon->getNumber()] = $pokemon;
                 $this->totalPokemons++;
@@ -146,6 +156,7 @@ class Pokedex{
 
     public function saveData(): bool{
         try {
+            // salvamento de dados acessa o array pokemon 
             return $this->persistencia->savePokemons($this->pokemons);
         } catch (Exception $e) {
             return false; // Retorna false em caso de erro
@@ -153,6 +164,7 @@ class Pokedex{
     }
 
     public function hasDataSaved(): bool{
+        // verifica se o arquivo de salvamento de dados existe
         return $this->persistencia->fileExists();
     }
 }

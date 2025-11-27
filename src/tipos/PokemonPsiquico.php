@@ -15,11 +15,11 @@ class PokemonPsiquico extends Pokemon{
         float $weight,
         ?Tipo $secondaryType = null
     ){
-        $psychicType = new Tipo(
-            "Psíquico",             // Tipo
-            ["Inseto", "Fantasma"], // Fraqueza
-            ["Lutador", "Psíquico"] // Resistencia
-        );
+        // Usa fonte única de verdade - Tipo ID 12 = Psíquico
+        $psychicType = Tipo::createByTypeId(12);
+        if ($psychicType === null) {
+            throw new \Exception("Tipo Psíquico não encontrado");
+        }
 
         // Chama o construtor da classe pai (Pokemon)
         parent::__construct($name, $psychicType,$secondaryType, $description, $number, $height, $weight);

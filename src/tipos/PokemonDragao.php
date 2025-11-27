@@ -15,11 +15,11 @@ class PokemonDragao extends Pokemon{
         float $weight,
         ?Tipo $secondaryType = null
     ){  
-        $dragonType = new Tipo(
-            "Dragão",                              // Tipo
-            ["Gelo", "Dragão"],                    // Fraquezas
-            ["Fogo", "Água", "Elétrico", "Grama"]  // Resistencias
-        );
+        // Usa fonte única de verdade - Tipo ID 6 = Dragão
+        $dragonType = Tipo::createByTypeId(6);
+        if ($dragonType === null) {
+            throw new \Exception("Tipo Dragão não encontrado");
+        }
 
         // Chama o construtor da classe pai (Pokemon)
         parent::__construct($name, $dragonType, $secondaryType, $description, $number, $height, $weight);

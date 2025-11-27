@@ -15,12 +15,11 @@ class PokemonFogo extends Pokemon{
         float $weight,
         ?Tipo $secondaryType = null
     ) {
-        
-        $fireType = new Tipo(
-            "Fogo",                   // Tipo
-            ["Água", "Terra"],        // Fraquezas
-            ["Planta", "Gelo", "Aço"] // Resistencia
-        );
+        // Usa fonte única de verdade - Tipo ID 1 = Fogo
+        $fireType = Tipo::createByTypeId(1);
+        if ($fireType === null) {
+            throw new \Exception("Tipo Fogo não encontrado");
+        }
 
         parent::__construct($name, $fireType, $secondaryType, $description, $number, $height, $weight);
     }

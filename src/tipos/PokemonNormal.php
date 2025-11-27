@@ -15,11 +15,11 @@ class PokemonNormal extends Pokemon{
         float $weight,
         ?Tipo $secondaryType = null
     ){  
-        $normalType = new Tipo(
-            "Normal",                     // Tipo
-            ["Lutador"],                  // Fraquezas
-            [" "]                         // Resistencias
-        );
+        // Usa fonte única de verdade - Tipo ID 10 = Normal
+        $normalType = Tipo::createByTypeId(10);
+        if ($normalType === null) {
+            throw new \Exception("Tipo Normal não encontrado");
+        }
 
         // Chama o construtor da classe pai (Pokemon)
         parent::__construct($name, $normalType,$secondaryType, $description, $number, $height, $weight);

@@ -15,11 +15,11 @@ class PokemonInseto extends Pokemon{
         float $weight,
         ?Tipo $secondaryType = null
     ){  
-        $bugType = new Tipo(
-            "Inseto",                             // Tipo
-            ["Fogo", "Voador", "Pedra"],          // Fraquezas
-            ["Planta", "Lutador", "Terrestre"]    // Resistencias
-        );
+        // Usa fonte única de verdade - Tipo ID 8 = Inseto
+        $bugType = Tipo::createByTypeId(8);
+        if ($bugType === null) {
+            throw new \Exception("Tipo Inseto não encontrado");
+        }
 
         // Chama o construtor da classe pai (Pokemon)
         parent::__construct($name, $bugType, $secondaryType, $description, $number, $height, $weight);

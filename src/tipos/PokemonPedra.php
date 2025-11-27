@@ -15,11 +15,11 @@ class PokemonPedra extends Pokemon{
         float $weight,
         ?Tipo $secondaryType = null
     ){  
-        $rockType = new Tipo(
-            "Pedra",                                    // Tipo
-            ["Água", "Planta", "Lutador", "Terrestre"], // Fraquezas
-            ["Fogo", "Normal", "voador", "Venenoso"]    // Resistencias
-        );
+        // Usa fonte única de verdade - Tipo ID 11 = Pedra
+        $rockType = Tipo::createByTypeId(11);
+        if ($rockType === null) {
+            throw new \Exception("Tipo Pedra não encontrado");
+        }
 
         // Chama o construtor da classe pai (Pokemon)
         parent::__construct($name, $rockType,$secondaryType, $description, $number, $height, $weight);

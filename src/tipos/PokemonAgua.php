@@ -15,11 +15,11 @@ class PokemonAgua extends Pokemon{
         float $weight,
         ?Tipo $secondaryType = null
     ){  
-        $waterType = new Tipo(
-            "Água",                     // Tipo
-            ["Planta", "Elétrico"],     // Fraquezas
-            ["Fogo", "Água", "Gelo"]    // Resistencias
-        );
+        // Usa fonte única de verdade - Tipo ID 2 = Água
+        $waterType = Tipo::createByTypeId(2);
+        if ($waterType === null) {
+            throw new \Exception("Tipo Água não encontrado");
+        }
 
         // Chama o construtor da classe pai (Pokemon)
         parent::__construct($name, $waterType, $secondaryType, $description, $number, $height, $weight);

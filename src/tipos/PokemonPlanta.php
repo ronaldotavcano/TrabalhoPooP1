@@ -15,11 +15,11 @@ class PokemonPlanta extends Pokemon{
         float $weight,
         ?Tipo $secondaryType = null
     ) {
-        $grassType = new Tipo(
-            "Planta",                                         // Tipo
-            ["Fogo", "Gelo", "Venenoso", "Voador", "Inseto"], // Fraquezas
-            ["Água", "Terra", "Pedra", "Elétrico"]            // Resistencias
-        );
+        // Usa fonte única de verdade - Tipo ID 3 = Planta
+        $grassType = Tipo::createByTypeId(3);
+        if ($grassType === null) {
+            throw new \Exception("Tipo Planta não encontrado");
+        }
 
         parent::__construct($name, $grassType, $secondaryType, $description, $number, $height, $weight);
     }

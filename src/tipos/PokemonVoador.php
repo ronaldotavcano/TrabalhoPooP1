@@ -15,11 +15,11 @@ class PokemonVoador extends Pokemon{
         float $weight,
         ?Tipo $secondaryType = null
     ){  
-        $flyingType = new Tipo(
-            "Voador",                      // Tipo
-            ["Elétrico", "Gelo", "Pedra"], // Fraqueza
-            ["Grama", "Lutador", "Inseto"] // Resistencia
-        );
+        // Usa fonte única de verdade - Tipo ID 15 = Voador
+        $flyingType = Tipo::createByTypeId(15);
+        if ($flyingType === null) {
+            throw new \Exception("Tipo Voador não encontrado");
+        }
 
         // Chama o construtor da classe pai (Pokemon)
         parent::__construct($name, $flyingType,$secondaryType, $description, $number, $height, $weight);

@@ -16,11 +16,11 @@ class PokemonEletrico extends Pokemon{
         ?Tipo $secondaryType = null
     ){
         
-        $electricType = new Tipo(
-            "Elétrico",               // Tipo
-            ["Terra"],                // Fraquezas
-            ["Voador", "Água"]        // Resistencias
-        );
+        // Usa fonte única de verdade - Tipo ID 4 = Elétrico
+        $electricType = Tipo::createByTypeId(4);
+        if ($electricType === null) {
+            throw new \Exception("Tipo Elétrico não encontrado");
+        }
 
         parent::__construct($name, $electricType,$secondaryType, $description, $number, $height, $weight);
     }

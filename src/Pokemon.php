@@ -29,6 +29,7 @@ abstract class Pokemon{
         $this->weight = $weight;
     }
 
+    // getters das variaveis do objeto pokemon
     public function getName(): string{
         return $this->name;
     }
@@ -90,8 +91,10 @@ abstract class Pokemon{
     }
 
     public function showSummary(): string{
+        // $tipos recebe o nome do tipo primario
         $tipos = $this->primaryType->getName();
         if ($this->secondaryType !== null) {
+            // se tipo secundario for diferente de nulo, $tipos concatena com / nome do tipo secundario
             $tipos .= "/" . $this->secondaryType->getName();
         }
         return "{$this->number} - {$this->name} ({$tipos})"; //ex: 006 - Charizard - (Fogo/Voador)
